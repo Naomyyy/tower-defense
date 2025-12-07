@@ -1,3 +1,0 @@
-/home/leticia/tower-defense/build/CMakeFiles/tower_defense.dir
-/home/leticia/tower-defense/build/CMakeFiles/edit_cache.dir
-/home/leticia/tower-defense/build/CMakeFiles/rebuild_cache.dir

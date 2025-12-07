@@ -1,0 +1,16 @@
+# Ignorar a pasta de build inteira
+build/
+cmake-build-debug/
+out/
+
+# Ignorar arquivos compilados e objetos
+*.o
+*.obj
+*.exe
+tower_defense
+
+# Ignorar arquivos do sistema ou editores
+.DS_Store
+.vscode/
+.idea/
+*.user

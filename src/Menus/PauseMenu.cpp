@@ -1,7 +1,7 @@
 #include "Menus/PauseMenu.hpp"
 
 PauseMenu::PauseMenu() {
-    font.loadFromFile("font.ttf"); // Ajuste o caminho para sua fonte
+    font.loadFromFile("assets/font.ttf"); // Ajuste o caminho para sua fonte
 
     resumeButton.setFont(font);
     resumeButton.setString("Resume");
