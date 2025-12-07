@@ -3,19 +3,20 @@
 cmake_policy(SET CMP0009 NEW)
 
 # SRC_FILES at CMakeLists.txt:12 (file)
-file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/naomy/ensta/b1/poo/tower-defense/src/*.cpp")
+file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/home/leticia/tower-defense/src/*.cpp")
 set(OLD_GLOB
-  "/home/naomy/ensta/b1/poo/tower-defense/src/Enemy.cpp"
-  "/home/naomy/ensta/b1/poo/tower-defense/src/Game.cpp"
-  "/home/naomy/ensta/b1/poo/tower-defense/src/Map.cpp"
-  "/home/naomy/ensta/b1/poo/tower-defense/src/Menus/MainMenu.cpp"
-  "/home/naomy/ensta/b1/poo/tower-defense/src/Menus/MenuMapEditor.cpp"
-  "/home/naomy/ensta/b1/poo/tower-defense/src/Menus/PauseMenu.cpp"
-  "/home/naomy/ensta/b1/poo/tower-defense/src/Projectile.cpp"
-  "/home/naomy/ensta/b1/poo/tower-defense/src/Tower.cpp"
-  "/home/naomy/ensta/b1/poo/tower-defense/src/main.cpp"
+  "/home/leticia/tower-defense/src/AssetManager.cpp"
+  "/home/leticia/tower-defense/src/Enemy.cpp"
+  "/home/leticia/tower-defense/src/Game.cpp"
+  "/home/leticia/tower-defense/src/Map.cpp"
+  "/home/leticia/tower-defense/src/Menus/MainMenu.cpp"
+  "/home/leticia/tower-defense/src/Menus/MenuMapEditor.cpp"
+  "/home/leticia/tower-defense/src/Menus/PauseMenu.cpp"
+  "/home/leticia/tower-defense/src/Projectile.cpp"
+  "/home/leticia/tower-defense/src/Tower.cpp"
+  "/home/leticia/tower-defense/src/main.cpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")
-  file(TOUCH_NOCREATE "/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles/cmake.verify_globs")
+  file(TOUCH_NOCREATE "/home/leticia/tower-defense/build/CMakeFiles/cmake.verify_globs")
 endif()

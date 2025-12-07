@@ -1,7 +1,6 @@
 CMakeFiles/tower_defense.dir/src/Map.cpp.o: \
- /home/naomy/ensta/b1/poo/tower-defense/src/Map.cpp \
- /usr/include/stdc-predef.h \
- /home/naomy/ensta/b1/poo/tower-defense/include/Map.hpp \
+ /home/leticia/tower-defense/src/Map.cpp /usr/include/stdc-predef.h \
+ /home/leticia/tower-defense/include/Map.hpp \
  /usr/include/SFML/Graphics.hpp /usr/include/SFML/Window.hpp \
  /usr/include/SFML/System.hpp /usr/include/SFML/Config.hpp \
  /usr/include/SFML/System/Clock.hpp /usr/include/SFML/System/Export.hpp \

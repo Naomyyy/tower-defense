@@ -1,8 +1,8 @@
 CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o: \
- /home/naomy/ensta/b1/poo/tower-defense/src/Menus/PauseMenu.cpp \
+ /home/leticia/tower-defense/src/Menus/PauseMenu.cpp \
  /usr/include/stdc-predef.h \
- /home/naomy/ensta/b1/poo/tower-defense/include/Menus/PauseMenu.hpp \
- /home/naomy/ensta/b1/poo/tower-defense/include/Menus/MenuScreen.hpp \
+ /home/leticia/tower-defense/include/Menus/PauseMenu.hpp \
+ /home/leticia/tower-defense/include/Menus/MenuScreen.hpp \
  /usr/include/SFML/Graphics.hpp /usr/include/SFML/Window.hpp \
  /usr/include/SFML/System.hpp /usr/include/SFML/Config.hpp \
  /usr/include/SFML/System/Clock.hpp /usr/include/SFML/System/Export.hpp \

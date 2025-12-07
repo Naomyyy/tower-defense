@@ -28,7 +28,7 @@ private:
     std::vector<sf::Vector2f> mPath;
 
     std::vector<std::unique_ptr<Enemy>> mEnemies;
-    Tower mTower;
+    std::vector<std::unique_ptr<Tower>> mTowers;
     std::vector<Projectile> mProjectiles;
 
     float mSpawnTimer = 0.f;

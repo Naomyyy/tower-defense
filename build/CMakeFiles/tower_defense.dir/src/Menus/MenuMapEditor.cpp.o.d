@@ -1,8 +1,8 @@
 CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o: \
- /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MenuMapEditor.cpp \
+ /home/leticia/tower-defense/src/Menus/MenuMapEditor.cpp \
  /usr/include/stdc-predef.h \
- /home/naomy/ensta/b1/poo/tower-defense/include/Menus/MenuMapEditor.hpp \
- /home/naomy/ensta/b1/poo/tower-defense/include/Menus/MenuScreen.hpp \
+ /home/leticia/tower-defense/include/Menus/MenuMapEditor.hpp \
+ /home/leticia/tower-defense/include/Menus/MenuScreen.hpp \
  /usr/include/SFML/Graphics.hpp /usr/include/SFML/Window.hpp \
  /usr/include/SFML/System.hpp /usr/include/SFML/Config.hpp \
  /usr/include/SFML/System/Clock.hpp /usr/include/SFML/System/Export.hpp \

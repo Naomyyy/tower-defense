@@ -2,10 +2,11 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <cmath>
+#include <string>
 
 class Enemy {
 public:
-    Enemy(sf::Vector2f startPos);
+    Enemy(sf::Vector2f startPos, const std::string& textureName);
 
     void update(float dt, const std::vector<sf::Vector2f>& path);
     void draw(sf::RenderWindow& window);
@@ -15,7 +16,7 @@ public:
     void destroy();
 
 private:
-    sf::CircleShape mShape;
+    sf::Sprite mSprite;
     float mSpeed = 60.f;
     int mCurrentWaypointIndex = 0;
     bool mAlive = true;
