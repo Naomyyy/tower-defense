@@ -1,7 +1,7 @@
 CMakeFiles/tower_defense.dir/src/Projectile.cpp.o: \
- /home/naomy/ensta/b1/poo/tower-defense/src/Projectile.cpp \
+ /home/leticia/tower-defense/src/Projectile.cpp \
  /usr/include/stdc-predef.h \
- /home/naomy/ensta/b1/poo/tower-defense/include/Projectile.hpp \
+ /home/leticia/tower-defense/include/Projectile.hpp \
  /usr/include/SFML/Graphics.hpp /usr/include/SFML/Window.hpp \
  /usr/include/SFML/System.hpp /usr/include/SFML/Config.hpp \
  /usr/include/SFML/System/Clock.hpp /usr/include/SFML/System/Export.hpp \

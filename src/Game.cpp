@@ -1,8 +1,9 @@
 #include "Game.hpp"
+#include "AssetManager.hpp"
+#include <memory>
 
 Game::Game()
     : mWindow(sf::VideoMode(800, 600), "Tower Defense - Modular"),
-      mTower({350, 250}),
       mGameState(MenuState::MainMenu)
 {
     mWindow.setFramerateLimit(60);
@@ -13,8 +14,16 @@ Game::Game()
         {500, 120}, {500, 450}, {750, 450}
     };
 
+    //Carrega as texturas
+    AssetManager& assets = AssetManager::getInstance();
+    assets.loadTexture("base_enemy", "assets/base_enemy.png");
+    assets.loadTexture("base_tower", "assets/base_tower.png");
+
     // Inicializa o menu principal
     mCurrentMenu = std::make_unique<MainMenu>();
+
+    //Inicializa a torre
+    mTowers.push_back(std::make_unique<Tower>(sf::Vector2f{350.f, 250.f}, "base_tower"));
 }
 
 void Game::run() {
@@ -79,7 +88,7 @@ void Game::update(float dt) {
     // 1. Spawner de inimigos
     mSpawnTimer -= dt;
     if (mSpawnTimer <= 0.f && mSpawnedCount < mMaxSpawn) {
-        mEnemies.push_back(std::make_unique<Enemy>(mPath.front()));
+        mEnemies.push_back(std::make_unique<Enemy>(mPath.front(), "base_enemy"));
         mSpawnedCount++;
         mSpawnTimer = mSpawnInterval;
     }
@@ -89,9 +98,11 @@ void Game::update(float dt) {
         enemy->update(dt, mPath);
     }
 
-    // 3. Torre tenta atirar
-    if (auto proj = mTower.update(dt, mEnemies)) {
-        mProjectiles.push_back(*proj);
+    // 3. Torres tentam atirar
+    for (auto& tower : mTowers) {
+        if (auto proj = tower->update(dt, mEnemies)) {
+            mProjectiles.push_back(*proj);
+        }
     }
 
     // 4. Atualiza projéteis
@@ -146,7 +157,7 @@ void Game::render() {
         }
 
         for (auto& e : mEnemies) e->draw(mWindow);
-        mTower.draw(mWindow);
+        for (auto& t : mTowers) t->draw(mWindow);
         for (auto& p : mProjectiles) p.draw(mWindow);
     }
 

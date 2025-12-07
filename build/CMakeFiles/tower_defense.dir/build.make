@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/naomy/ensta/b1/poo/tower-defense
+CMAKE_SOURCE_DIR = /home/leticia/tower-defense
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/naomy/ensta/b1/poo/tower-defense/build
+CMAKE_BINARY_DIR = /home/leticia/tower-defense/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/tower_defense.dir/depend.make
@@ -69,134 +69,149 @@ include CMakeFiles/tower_defense.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/tower_defense.dir/flags.make
 
+CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o: CMakeFiles/tower_defense.dir/flags.make
+CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o: /home/leticia/tower-defense/src/AssetManager.cpp
+CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o -MF CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o.d -o CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o -c /home/leticia/tower-defense/src/AssetManager.cpp
+
+CMakeFiles/tower_defense.dir/src/AssetManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/AssetManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/AssetManager.cpp > CMakeFiles/tower_defense.dir/src/AssetManager.cpp.i
+
+CMakeFiles/tower_defense.dir/src/AssetManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/AssetManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/AssetManager.cpp -o CMakeFiles/tower_defense.dir/src/AssetManager.cpp.s
+
 CMakeFiles/tower_defense.dir/src/Enemy.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/Enemy.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/Enemy.cpp
+CMakeFiles/tower_defense.dir/src/Enemy.cpp.o: /home/leticia/tower-defense/src/Enemy.cpp
 CMakeFiles/tower_defense.dir/src/Enemy.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tower_defense.dir/src/Enemy.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Enemy.cpp.o -MF CMakeFiles/tower_defense.dir/src/Enemy.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Enemy.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/Enemy.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/tower_defense.dir/src/Enemy.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Enemy.cpp.o -MF CMakeFiles/tower_defense.dir/src/Enemy.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Enemy.cpp.o -c /home/leticia/tower-defense/src/Enemy.cpp
 
 CMakeFiles/tower_defense.dir/src/Enemy.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/Enemy.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/Enemy.cpp > CMakeFiles/tower_defense.dir/src/Enemy.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/Enemy.cpp > CMakeFiles/tower_defense.dir/src/Enemy.cpp.i
 
 CMakeFiles/tower_defense.dir/src/Enemy.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/Enemy.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/Enemy.cpp -o CMakeFiles/tower_defense.dir/src/Enemy.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/Enemy.cpp -o CMakeFiles/tower_defense.dir/src/Enemy.cpp.s
 
 CMakeFiles/tower_defense.dir/src/Game.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/Game.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/Game.cpp
+CMakeFiles/tower_defense.dir/src/Game.cpp.o: /home/leticia/tower-defense/src/Game.cpp
 CMakeFiles/tower_defense.dir/src/Game.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/tower_defense.dir/src/Game.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Game.cpp.o -MF CMakeFiles/tower_defense.dir/src/Game.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Game.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/Game.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/tower_defense.dir/src/Game.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Game.cpp.o -MF CMakeFiles/tower_defense.dir/src/Game.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Game.cpp.o -c /home/leticia/tower-defense/src/Game.cpp
 
 CMakeFiles/tower_defense.dir/src/Game.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/Game.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/Game.cpp > CMakeFiles/tower_defense.dir/src/Game.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/Game.cpp > CMakeFiles/tower_defense.dir/src/Game.cpp.i
 
 CMakeFiles/tower_defense.dir/src/Game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/Game.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/Game.cpp -o CMakeFiles/tower_defense.dir/src/Game.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/Game.cpp -o CMakeFiles/tower_defense.dir/src/Game.cpp.s
 
 CMakeFiles/tower_defense.dir/src/Map.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/Map.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/Map.cpp
+CMakeFiles/tower_defense.dir/src/Map.cpp.o: /home/leticia/tower-defense/src/Map.cpp
 CMakeFiles/tower_defense.dir/src/Map.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/tower_defense.dir/src/Map.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Map.cpp.o -MF CMakeFiles/tower_defense.dir/src/Map.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Map.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/Map.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/tower_defense.dir/src/Map.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Map.cpp.o -MF CMakeFiles/tower_defense.dir/src/Map.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Map.cpp.o -c /home/leticia/tower-defense/src/Map.cpp
 
 CMakeFiles/tower_defense.dir/src/Map.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/Map.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/Map.cpp > CMakeFiles/tower_defense.dir/src/Map.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/Map.cpp > CMakeFiles/tower_defense.dir/src/Map.cpp.i
 
 CMakeFiles/tower_defense.dir/src/Map.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/Map.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/Map.cpp -o CMakeFiles/tower_defense.dir/src/Map.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/Map.cpp -o CMakeFiles/tower_defense.dir/src/Map.cpp.s
 
 CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MainMenu.cpp
+CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o: /home/leticia/tower-defense/src/Menus/MainMenu.cpp
 CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o -MF CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MainMenu.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o -MF CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o -c /home/leticia/tower-defense/src/Menus/MainMenu.cpp
 
 CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MainMenu.cpp > CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/Menus/MainMenu.cpp > CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.i
 
 CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MainMenu.cpp -o CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/Menus/MainMenu.cpp -o CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.s
 
 CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MenuMapEditor.cpp
+CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o: /home/leticia/tower-defense/src/Menus/MenuMapEditor.cpp
 CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o -MF CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MenuMapEditor.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o -MF CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.o -c /home/leticia/tower-defense/src/Menus/MenuMapEditor.cpp
 
 CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MenuMapEditor.cpp > CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/Menus/MenuMapEditor.cpp > CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.i
 
 CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MenuMapEditor.cpp -o CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/Menus/MenuMapEditor.cpp -o CMakeFiles/tower_defense.dir/src/Menus/MenuMapEditor.cpp.s
 
 CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/Menus/PauseMenu.cpp
+CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o: /home/leticia/tower-defense/src/Menus/PauseMenu.cpp
 CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o -MF CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/Menus/PauseMenu.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o -MF CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.o -c /home/leticia/tower-defense/src/Menus/PauseMenu.cpp
 
 CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/Menus/PauseMenu.cpp > CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/Menus/PauseMenu.cpp > CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.i
 
 CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/Menus/PauseMenu.cpp -o CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/Menus/PauseMenu.cpp -o CMakeFiles/tower_defense.dir/src/Menus/PauseMenu.cpp.s
 
 CMakeFiles/tower_defense.dir/src/Projectile.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/Projectile.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/Projectile.cpp
+CMakeFiles/tower_defense.dir/src/Projectile.cpp.o: /home/leticia/tower-defense/src/Projectile.cpp
 CMakeFiles/tower_defense.dir/src/Projectile.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/tower_defense.dir/src/Projectile.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Projectile.cpp.o -MF CMakeFiles/tower_defense.dir/src/Projectile.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Projectile.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/Projectile.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/tower_defense.dir/src/Projectile.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Projectile.cpp.o -MF CMakeFiles/tower_defense.dir/src/Projectile.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Projectile.cpp.o -c /home/leticia/tower-defense/src/Projectile.cpp
 
 CMakeFiles/tower_defense.dir/src/Projectile.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/Projectile.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/Projectile.cpp > CMakeFiles/tower_defense.dir/src/Projectile.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/Projectile.cpp > CMakeFiles/tower_defense.dir/src/Projectile.cpp.i
 
 CMakeFiles/tower_defense.dir/src/Projectile.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/Projectile.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/Projectile.cpp -o CMakeFiles/tower_defense.dir/src/Projectile.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/Projectile.cpp -o CMakeFiles/tower_defense.dir/src/Projectile.cpp.s
 
 CMakeFiles/tower_defense.dir/src/Tower.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/Tower.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/Tower.cpp
+CMakeFiles/tower_defense.dir/src/Tower.cpp.o: /home/leticia/tower-defense/src/Tower.cpp
 CMakeFiles/tower_defense.dir/src/Tower.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/tower_defense.dir/src/Tower.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Tower.cpp.o -MF CMakeFiles/tower_defense.dir/src/Tower.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Tower.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/Tower.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/tower_defense.dir/src/Tower.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/Tower.cpp.o -MF CMakeFiles/tower_defense.dir/src/Tower.cpp.o.d -o CMakeFiles/tower_defense.dir/src/Tower.cpp.o -c /home/leticia/tower-defense/src/Tower.cpp
 
 CMakeFiles/tower_defense.dir/src/Tower.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/Tower.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/Tower.cpp > CMakeFiles/tower_defense.dir/src/Tower.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/Tower.cpp > CMakeFiles/tower_defense.dir/src/Tower.cpp.i
 
 CMakeFiles/tower_defense.dir/src/Tower.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/Tower.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/Tower.cpp -o CMakeFiles/tower_defense.dir/src/Tower.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/Tower.cpp -o CMakeFiles/tower_defense.dir/src/Tower.cpp.s
 
 CMakeFiles/tower_defense.dir/src/main.cpp.o: CMakeFiles/tower_defense.dir/flags.make
-CMakeFiles/tower_defense.dir/src/main.cpp.o: /home/naomy/ensta/b1/poo/tower-defense/src/main.cpp
+CMakeFiles/tower_defense.dir/src/main.cpp.o: /home/leticia/tower-defense/src/main.cpp
 CMakeFiles/tower_defense.dir/src/main.cpp.o: CMakeFiles/tower_defense.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/tower_defense.dir/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/main.cpp.o -MF CMakeFiles/tower_defense.dir/src/main.cpp.o.d -o CMakeFiles/tower_defense.dir/src/main.cpp.o -c /home/naomy/ensta/b1/poo/tower-defense/src/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/tower_defense.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tower_defense.dir/src/main.cpp.o -MF CMakeFiles/tower_defense.dir/src/main.cpp.o.d -o CMakeFiles/tower_defense.dir/src/main.cpp.o -c /home/leticia/tower-defense/src/main.cpp
 
 CMakeFiles/tower_defense.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tower_defense.dir/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/naomy/ensta/b1/poo/tower-defense/src/main.cpp > CMakeFiles/tower_defense.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/leticia/tower-defense/src/main.cpp > CMakeFiles/tower_defense.dir/src/main.cpp.i
 
 CMakeFiles/tower_defense.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tower_defense.dir/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/naomy/ensta/b1/poo/tower-defense/src/main.cpp -o CMakeFiles/tower_defense.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/leticia/tower-defense/src/main.cpp -o CMakeFiles/tower_defense.dir/src/main.cpp.s
 
 # Object files for target tower_defense
 tower_defense_OBJECTS = \
+"CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o" \
 "CMakeFiles/tower_defense.dir/src/Enemy.cpp.o" \
 "CMakeFiles/tower_defense.dir/src/Game.cpp.o" \
 "CMakeFiles/tower_defense.dir/src/Map.cpp.o" \
@@ -210,6 +225,7 @@ tower_defense_OBJECTS = \
 # External object files for target tower_defense
 tower_defense_EXTERNAL_OBJECTS =
 
+tower_defense: CMakeFiles/tower_defense.dir/src/AssetManager.cpp.o
 tower_defense: CMakeFiles/tower_defense.dir/src/Enemy.cpp.o
 tower_defense: CMakeFiles/tower_defense.dir/src/Game.cpp.o
 tower_defense: CMakeFiles/tower_defense.dir/src/Map.cpp.o
@@ -224,7 +240,7 @@ tower_defense: /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1
 tower_defense: /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1
 tower_defense: /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
 tower_defense: CMakeFiles/tower_defense.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable tower_defense"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/leticia/tower-defense/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable tower_defense"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tower_defense.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -236,6 +252,6 @@ CMakeFiles/tower_defense.dir/clean:
 .PHONY : CMakeFiles/tower_defense.dir/clean
 
 CMakeFiles/tower_defense.dir/depend:
-	cd /home/naomy/ensta/b1/poo/tower-defense/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/naomy/ensta/b1/poo/tower-defense /home/naomy/ensta/b1/poo/tower-defense /home/naomy/ensta/b1/poo/tower-defense/build /home/naomy/ensta/b1/poo/tower-defense/build /home/naomy/ensta/b1/poo/tower-defense/build/CMakeFiles/tower_defense.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/leticia/tower-defense/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/leticia/tower-defense /home/leticia/tower-defense /home/leticia/tower-defense/build /home/leticia/tower-defense/build /home/leticia/tower-defense/build/CMakeFiles/tower_defense.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/tower_defense.dir/depend
 

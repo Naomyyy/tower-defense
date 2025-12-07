@@ -1,7 +1,7 @@
 CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o: \
- /home/naomy/ensta/b1/poo/tower-defense/src/Menus/MainMenu.cpp \
+ /home/leticia/tower-defense/src/Menus/MainMenu.cpp \
  /usr/include/stdc-predef.h \
- /home/naomy/ensta/b1/poo/tower-defense/include/Menus/MainMenu.hpp \
+ /home/leticia/tower-defense/include/Menus/MainMenu.hpp \
  /usr/include/SFML/Graphics.hpp /usr/include/SFML/Window.hpp \
  /usr/include/SFML/System.hpp /usr/include/SFML/Config.hpp \
  /usr/include/SFML/System/Clock.hpp /usr/include/SFML/System/Export.hpp \
@@ -236,4 +236,4 @@ CMakeFiles/tower_defense.dir/src/Menus/MainMenu.cpp.o: \
  /usr/include/SFML/Graphics/Sprite.hpp \
  /usr/include/SFML/Graphics/Text.hpp \
  /usr/include/SFML/Graphics/VertexBuffer.hpp \
- /home/naomy/ensta/b1/poo/tower-defense/include/Menus/MenuScreen.hpp
+ /home/leticia/tower-defense/include/Menus/MenuScreen.hpp
