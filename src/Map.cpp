@@ -38,6 +38,79 @@ void Map::load() {
             mGrid[y][x] = tempMap[y][x];
         }
     }
+
+    mPath.clear();
+    int currentX = -1;
+    int currentY = -1;
+    
+    // 1. Encontrar o Ponto de Partida (Primeira Coluna onde a estrada começa)
+    for (int y = 0; y < GRID_HEIGHT; ++y) {
+        if (mGrid[y][0] == 1) {
+            currentX = 0;
+            currentY = y;
+            break;
+        }
+    }
+    if (currentX == -1) return; 
+
+    // O ponto de partida é sempre um waypoint
+    mPath.push_back(getCenterCoords(currentX, currentY));
+    
+    // Marca o tile inicial como visitado ('2')
+    mGrid[currentY][currentX] = 2; 
+    
+    // Assumimos que o movimento inicial é para a direita (dx=1, dy=0)
+    int lastDirX = 1; 
+    int lastDirY = 0; 
+    
+    // Array de vizinhos: [dy, dx]
+    int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // Direita, Esquerda, Baixo, Cima
+
+    // 2. Rastreamento e Registro de Curvas
+    while (true) {
+        bool foundNext = false;
+        int nextX = -1, nextY = -1;
+        int newDirX = 0, newDirY = 0;
+
+        // Procura o próximo tile ('1')
+        for (int i = 0; i < 4; ++i) {
+            int checkX = currentX + dir[i][1];
+            int checkY = currentY + dir[i][0];
+
+            if (checkX >= 0 && checkX < GRID_WIDTH &&
+                checkY >= 0 && checkY < GRID_HEIGHT &&
+                mGrid[checkY][checkX] == 1) 
+            {
+                // Encontrou o próximo tile válido
+                nextX = checkX;
+                nextY = checkY;
+                newDirX = dir[i][1];
+                newDirY = dir[i][0];
+                foundNext = true;
+                break; 
+            }
+        }
+
+        if (!foundNext) {
+            // FIM DO CAMINHO: Registra o waypoint final e sai
+            mPath.push_back(getCenterCoords(currentX, currentY));
+            break; 
+        }
+
+        // Se a direção de movimento mudou, o ponto ATUAL é uma curva (Waypoint)
+        if (newDirX != lastDirX || newDirY != lastDirY) {
+            mPath.push_back(getCenterCoords(currentX, currentY));
+            
+            // Atualiza a direção
+            lastDirX = newDirX;
+            lastDirY = newDirY;
+        }
+
+        // Movimento para o próximo tile
+        currentX = nextX;
+        currentY = nextY;
+        mGrid[currentY][currentX] = 2; // Marca como visitado (não será encontrado novamente)
+    }
 }
 
 void Map::draw(sf::RenderWindow& window) {
@@ -67,4 +140,11 @@ int Map::getTileId(float mouseX, float mouseY) {
         return -1; // -1 significa fora do mapa
 
     return mGrid[row][col];
+}
+
+const std::vector<sf::Vector2f>& Map::getPath() const{return mPath;}
+
+sf::Vector2f Map::getCenterCoords(int x, int y) const {
+    const float TILE_CENTER = TILE_SIZE / 2.f;
+    return sf::Vector2f(x * TILE_SIZE + TILE_CENTER, y * TILE_SIZE + TILE_CENTER);
 }

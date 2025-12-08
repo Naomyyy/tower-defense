@@ -2,17 +2,12 @@
 #include "AssetManager.hpp"
 #include <memory>
 
+
 Game::Game()
     : mWindow(sf::VideoMode(800, 600), "Tower Defense - Modular"),
       mGameState(MenuState::MainMenu)
 {
     mWindow.setFramerateLimit(60);
-
-    // Define o caminho do mapa (hardcoded)
-    mPath = {
-        {50, 300}, {200, 300}, {200, 120},
-        {500, 120}, {500, 450}, {750, 450}
-    };
 
     //Carrega as texturas
     AssetManager& assets = AssetManager::getInstance();
@@ -21,9 +16,6 @@ Game::Game()
 
     // Inicializa o menu principal
     mCurrentMenu = std::make_unique<MainMenu>();
-
-    //Inicializa a torre
-    mTowers.push_back(std::make_unique<Tower>(sf::Vector2f{350.f, 250.f}, "base_tower"));
 }
 
 void Game::run() {
@@ -82,20 +74,34 @@ void Game::processEvents(const sf::Event& ev) {
         mGameState = MenuState::Pause;
         mCurrentMenu = std::make_unique<PauseMenu>();
     }
+    else if(ev.type == sf::Event::MouseButtonReleased && ev.mouseButton.button == sf::Mouse::Left){
+        sf::Vector2i mousePos = {ev.mouseButton.x, ev.mouseButton.y};
+        // Converte as coordenadas do pixel para a posição X, Y do tile
+        int tileX = mousePos.x / TILE_SIZE;
+        int tileY = mousePos.y / TILE_SIZE;
+        // Verifica se as coordenadas do tile estão dentro dos limites do mapa e adiciona a torre
+        if (tileX >= 0 && tileX < GRID_WIDTH && tileY >= 0 && tileY < GRID_HEIGHT) {
+            if (mMap.getTileId(tileX, tileY) == 0) {
+                float centerX = tileX * TILE_SIZE + TILE_SIZE / 2.f;
+                float centerY = tileY * TILE_SIZE + TILE_SIZE / 2.f;
+                mTowers.push_back(std::make_unique<Tower>(sf::Vector2f{centerX, centerY}, "base_tower"));
+            }
+        }
+    }
 }
 
 void Game::update(float dt) {
     // 1. Spawner de inimigos
     mSpawnTimer -= dt;
     if (mSpawnTimer <= 0.f && mSpawnedCount < mMaxSpawn) {
-        mEnemies.push_back(std::make_unique<Enemy>(mPath.front(), "base_enemy"));
+        mEnemies.push_back(std::make_unique<Enemy>(mMap.getPath().front(), "base_enemy"));
         mSpawnedCount++;
         mSpawnTimer = mSpawnInterval;
     }
 
     // 2. Atualiza inimigos
     for (auto& enemy : mEnemies) {
-        enemy->update(dt, mPath);
+        enemy->update(dt, mMap.getPath());
     }
 
     // 3. Torres tentam atirar
@@ -149,6 +155,7 @@ void Game::render() {
     if (mCurrentMenu) {
         mCurrentMenu->draw(mWindow);
     } else {
+        mMap.draw(mWindow);
         if (!mPath.empty()) {
             std::vector<sf::Vertex> lines;
             for (const auto& pos : mPath)
