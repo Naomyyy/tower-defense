@@ -36,6 +36,6 @@ private:
     int mSpawnedCount = 0;
     int mMaxSpawn = 20;
 
-    MenuState mGameState;
+    MenuState mGameState = MenuState::MainMenu; // Começa no menu principal
     std::unique_ptr<MenuScreen> mCurrentMenu;
 };

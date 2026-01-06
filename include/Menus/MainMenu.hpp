@@ -1,21 +1,23 @@
 #pragma once
-
-#include <SFML/Graphics.hpp>
 #include "MenuScreen.hpp"
-class MainMenu : public MenuScreen {
-private:
-    MenuState next = MenuState::None;
+#include <SFML/Graphics.hpp>
 
+class MainMenu : public MenuScreen {
+public:
+    explicit MainMenu(sf::RenderWindow& window);
+
+    void handleEvent(const sf::Event& ev, sf::RenderWindow& window) override;
+    void update(float dt, sf::RenderWindow& window) override;
+    void draw(sf::RenderWindow& win) override;
+
+    MenuState getNextState() const override;
+
+private:
+    sf::RenderWindow& mWindow;
     sf::Font font;
     sf::Text title;
     sf::Text playButton;
     sf::Text editorButton;
-
-public:
-    MainMenu();
-
-    void handleEvent(const sf::Event& ev) override;
-    void update(float dt) override;
-    void draw(sf::RenderWindow& win) override;
-    MenuState getNextState() const override;
+    MenuState next = MenuState::None;
 };
+#pragma once

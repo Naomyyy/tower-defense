@@ -1,4 +1,4 @@
-#include "Map.hpp"
+#include "Maps/Map.hpp"
 
 Map::Map() {
     // Configura visual básico (depois usamos texturas)
