@@ -1,40 +1,36 @@
 #include "Menus/PauseMenu.hpp"
 
-PauseMenu::PauseMenu() {
-    font.loadFromFile("assets/font.ttf"); // Ajuste o caminho para sua fonte
+PauseMenu::PauseMenu(sf::RenderWindow& window)
+    : mWindow(window)
+{
+    if (!mFont.loadFromFile("assets/font.ttf")) {
+        // Trate erro de carregamento da fonte aqui
+    }
 
-    resumeButton.setFont(font);
-    resumeButton.setString("Resume");
-    resumeButton.setCharacterSize(36);
-    resumeButton.setFillColor(sf::Color::White);
-    resumeButton.setPosition(250.f, 250.f);
+    mResumeButton = std::make_unique<Button>("Resume", sf::Vector2f(300.f, 200.f), mFont, 32);
+    mMainMenuButton = std::make_unique<Button>("Main Menu", sf::Vector2f(300.f, 300.f), mFont, 32);
 }
 
-void PauseMenu::handleEvent(const sf::Event& ev) {
-    if (ev.type == sf::Event::MouseButtonPressed && ev.mouseButton.button == sf::Mouse::Left) {
-        sf::Vector2f mousePos(ev.mouseButton.x, ev.mouseButton.y);
-
-        if (resumeButton.getGlobalBounds().contains(mousePos)) {
-            next = MenuState::Gameplay;
-        }
+void PauseMenu::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
+    if (mResumeButton->clicked(window, ev)) {
+        mNextState = MenuState::Gameplay;  // Voltar ao jogo
+    } else if (mMainMenuButton->clicked(window, ev)) {
+        mNextState = MenuState::MainMenu;  // Voltar ao menu principal
     }
 }
 
-void PauseMenu::update(float dt) {
-    sf::Vector2i mousePosI = sf::Mouse::getPosition();
-    sf::Vector2f mousePosF(static_cast<float>(mousePosI.x), static_cast<float>(mousePosI.y));
-
-    if (resumeButton.getGlobalBounds().contains(mousePosF)) {
-        resumeButton.setFillColor(sf::Color::Yellow);
-    } else {
-        resumeButton.setFillColor(sf::Color::White);
-    }
+void PauseMenu::update(float dt, sf::RenderWindow& window) {
+    mResumeButton->update(window);
+    mMainMenuButton->update(window);
 }
 
-void PauseMenu::draw(sf::RenderWindow& win) {
-    win.draw(resumeButton);
+void PauseMenu::draw(sf::RenderWindow& window) {
+    window.clear(sf::Color(50, 50, 50, 200)); // Fundo semitransparente
+    mResumeButton->draw(window);
+    mMainMenuButton->draw(window);
+    window.display();
 }
 
 MenuState PauseMenu::getNextState() const {
-    return next;
+    return mNextState;
 }

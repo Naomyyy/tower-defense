@@ -1,7 +1,7 @@
 #include "Menus/MainMenu.hpp"
 
-MainMenu::MainMenu() {
-    font.loadFromFile("assets/font.ttf"); // Ajuste o caminho para sua fonte
+MainMenu::MainMenu(sf::RenderWindow& window) : mWindow(window) {
+    font.loadFromFile("assets/font.ttf"); // Ajuste o caminho
 
     title.setFont(font);
     title.setString("Tower Defense");
@@ -22,7 +22,7 @@ MainMenu::MainMenu() {
     editorButton.setPosition(250.f, 280.f);
 }
 
-void MainMenu::handleEvent(const sf::Event& ev) {
+void MainMenu::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
     if (ev.type == sf::Event::MouseButtonPressed && ev.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2f mousePos(ev.mouseButton.x, ev.mouseButton.y);
 
@@ -35,11 +35,8 @@ void MainMenu::handleEvent(const sf::Event& ev) {
     }
 }
 
-void MainMenu::update(float dt) {
-    // Você pode colocar efeito hover nos botões aqui se quiser
-    // Exemplo básico para mudar cor se mouse estiver sobre botão:
-
-    sf::Vector2i mousePosI = sf::Mouse::getPosition();
+void MainMenu::update(float dt, sf::RenderWindow& window) {
+    sf::Vector2i mousePosI = sf::Mouse::getPosition(window);
     sf::Vector2f mousePosF(static_cast<float>(mousePosI.x), static_cast<float>(mousePosI.y));
 
     if (playButton.getGlobalBounds().contains(mousePosF)) {

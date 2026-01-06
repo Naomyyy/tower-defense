@@ -5,6 +5,10 @@
 
 Game::Game()
     : mWindow(sf::VideoMode(800, 600), "Tower Defense - Modular"),
+      mSpawnInterval(2.f),
+      mSpawnTimer(0.f),
+      mSpawnedCount(0),
+      mMaxSpawn(20),
       mGameState(MenuState::MainMenu)
 {
     mWindow.setFramerateLimit(60);
@@ -15,8 +19,7 @@ Game::Game()
     assets.loadTexture("base_tower", "assets/base_tower.png");
 
     // Inicializa o menu principal
-    mCurrentMenu = std::make_unique<MainMenu>();
-}
+    mCurrentMenu = std::make_unique<MainMenu>(mWindow);}
 
 void Game::run() {
     sf::Clock clock;
@@ -26,35 +29,37 @@ void Game::run() {
 
         sf::Event ev;
         while (mWindow.pollEvent(ev)) {
-            if (ev.type == sf::Event::Closed)
+            if (ev.type == sf::Event::Closed) {
                 mWindow.close();
-
-            if (mCurrentMenu) {
-                mCurrentMenu->handleEvent(ev);
             } else {
-                processEvents(ev);
+                if (mCurrentMenu) {
+                    mCurrentMenu->handleEvent(ev, mWindow);
+                } else {
+                    processEvents(ev);
+                }
             }
         }
 
         if (mCurrentMenu) {
-            mCurrentMenu->update(dt);
+            mCurrentMenu->update(dt, mWindow);
 
-            MenuState next = mCurrentMenu->getNextState();
-            if (next != MenuState::None) {
-                mGameState = next;
+            MenuState nextState = mCurrentMenu->getNextState();
+            if (nextState != MenuState::None && nextState != mGameState) {
+                mGameState = nextState;
 
                 switch (mGameState) {
-                    case MenuState::Gameplay:
-                        mCurrentMenu.reset(); // sai do menu e começa o jogo
+                    case MenuState::MainMenu:
+                        mCurrentMenu = std::make_unique<MainMenu>(mWindow);
                         break;
                     case MenuState::Pause:
-                        mCurrentMenu = std::make_unique<PauseMenu>();
+                        mCurrentMenu = std::make_unique<PauseMenu>(mWindow);
                         break;
                     case MenuState::MapEditor:
-                        mCurrentMenu = std::make_unique<MapEditor>(mWindow, 20);
+                        mCurrentMenu = std::make_unique<MenuMapEditor>(mWindow);
                         break;
-                    case MenuState::MainMenu:
-                        mCurrentMenu = std::make_unique<MainMenu>();
+                    case MenuState::Gameplay:
+                        mCurrentMenu.reset(); // Sai do menu, começa o jogo
+                        mMap.load();
                         break;
                     default:
                         break;
@@ -72,7 +77,7 @@ void Game::processEvents(const sf::Event& ev) {
     // Exemplo: tecla ESC para pausar o jogo
     if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape) {
         mGameState = MenuState::Pause;
-        mCurrentMenu = std::make_unique<PauseMenu>();
+        mCurrentMenu = std::make_unique<PauseMenu>(mWindow);
     }
     else if(ev.type == sf::Event::MouseButtonReleased && ev.mouseButton.button == sf::Mouse::Left){
         sf::Vector2i mousePos = {ev.mouseButton.x, ev.mouseButton.y};
@@ -93,10 +98,20 @@ void Game::processEvents(const sf::Event& ev) {
 void Game::update(float dt) {
     // 1. Spawner de inimigos
     mSpawnTimer -= dt;
+    
+    const std::vector<sf::Vector2f>& path = mMap.getPath();
+
     if (mSpawnTimer <= 0.f && mSpawnedCount < mMaxSpawn) {
-        mEnemies.push_back(std::make_unique<Enemy>(mMap.getPath().front(), "base_enemy"));
-        mSpawnedCount++;
-        mSpawnTimer = mSpawnInterval;
+        // PROTEÇÃO: Só entra se o caminho não estiver vazio
+        if (!path.empty()) {
+            mEnemies.push_back(std::make_unique<Enemy>(
+                path.front(), 
+                "base_enemy", 
+                100, 10, 60.f, 20
+            ));
+            mSpawnedCount++;
+            mSpawnTimer = mSpawnInterval;
+        } 
     }
 
     // 2. Atualiza inimigos

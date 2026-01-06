@@ -17,13 +17,10 @@ public:
 
     // Helps to know if we clicked on grass or road
     int getTileId(float x, float y); 
-
-
     const std::vector<sf::Vector2f>& getPath() const;
     sf::Vector2f getCenterCoords(int x, int y) const;
 
 private:
-
     std::vector<sf::Vector2f> mPath;
     // The matrix that stores the ID of each block [y][x]
     int mGrid[GRID_HEIGHT][GRID_WIDTH];

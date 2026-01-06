@@ -1,35 +1,34 @@
 #pragma once
 #include "MenuScreen.hpp"
+#include "Button.hpp"
+#include "../Maps/MapEditor.hpp"
 #include <SFML/Graphics.hpp>
-#include <vector>
-#include <fstream>
-#include <iostream>
 
-class MapEditor : public MenuScreen {
+class MenuMapEditor : public MenuScreen {
 public:
-    MapEditor(sf::RenderWindow& window, int tileSize);
+    MenuMapEditor(sf::RenderWindow& window);
 
-    void handleEvent(const sf::Event& ev) override;
-    void update(float dt) override;
+    void handleEvent(const sf::Event& ev, sf::RenderWindow& window) override;
+    void update(float dt, sf::RenderWindow& window) override;
     void draw(sf::RenderWindow& window) override;
 
     MenuState getNextState() const override;
 
 private:
     sf::RenderWindow& mWindow;
-    int mTileSize;
+    sf::Font mFont;
 
-    int mGridWidth;
-    int mGridHeight;
+    Button* btnEdit;
+    Button* btnLoad;
+    Button* btnSave;
+    Button* btnBack;
 
-    std::vector<std::vector<bool>> mWalls; // mapa: parede = true, vazio = false
+    MenuState next = MenuState::None;
 
-    bool mMouseDown = false;
-    enum class PlacementMode { Wall, Erase };
-    PlacementMode mCurrentMode = PlacementMode::Wall;
+    // Editor real
+    MapEditor editor;
+    bool editing = false;
 
-    MenuState mNextState = MenuState::None;
-
-    void saveToFile(const std::string& filename);
-    void loadFromFile(const std::string& filename);
+    void enterEditor();
+    void exitEditor();
 };

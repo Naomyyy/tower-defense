@@ -1,123 +1,71 @@
 #include "Menus/MenuMapEditor.hpp"
+#include <iostream>
 
-MapEditor::MapEditor(sf::RenderWindow& window, int tileSize)
-    : mWindow(window), mTileSize(tileSize) 
+MenuMapEditor::MenuMapEditor(sf::RenderWindow& window)
+    : mWindow(window), editor(window, 32)
 {
-    mGridWidth = window.getSize().x / tileSize;
-    mGridHeight = window.getSize().y / tileSize;
+    mFont.loadFromFile("assets/font.ttf");
 
-    // Inicializa grid vazia
-    mWalls.resize(mGridHeight, std::vector<bool>(mGridWidth, false));
+    btnEdit = new Button("Editar Mapa", {100, 120}, mFont);
+    btnLoad = new Button("Carregar",    {100, 200}, mFont);
+    btnSave = new Button("Salvar",      {100, 280}, mFont);
+    btnBack = new Button("Voltar",      {100, 360}, mFont);
 }
 
-void MapEditor::handleEvent(const sf::Event& ev) {
-    if (ev.type == sf::Event::Closed) {
-        mWindow.close();
-    }
-
-    if (ev.type == sf::Event::KeyPressed) {
-        switch (ev.key.code) {
-            case sf::Keyboard::Escape:
-                mNextState = MenuState::MainMenu;
-                break;
-            case sf::Keyboard::S:
-                saveToFile("map.txt");
-                break;
-            case sf::Keyboard::L:
-                loadFromFile("map.txt");
-                break;
-            case sf::Keyboard::Num1:
-                mCurrentMode = PlacementMode::Wall;
-                break;
-            case sf::Keyboard::Num2:
-                mCurrentMode = PlacementMode::Erase;
-                break;
-            default:
-                break;
+void MenuMapEditor::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
+    if (!editing) {
+        if (btnEdit->clicked(window, ev)) {
+            enterEditor();
+        }
+        if (btnLoad->clicked(window, ev)) {
+            editor.loadFromFile("map.txt");
+        }
+        if (btnSave->clicked(window, ev)) {
+            editor.saveToFile("map.txt");
+        }
+        if (btnBack->clicked(window, ev)) {
+            next = MenuState::MainMenu;
         }
     }
-
-    if (ev.type == sf::Event::MouseButtonPressed && ev.mouseButton.button == sf::Mouse::Left) {
-        mMouseDown = true;
-    }
-    if (ev.type == sf::Event::MouseButtonReleased && ev.mouseButton.button == sf::Mouse::Left) {
-        mMouseDown = false;
+    else {
+        editor.handleEvent(ev, window);
+        if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape)
+            exitEditor();
     }
 }
 
-void MapEditor::update(float dt) {
-    if (!mMouseDown) return;
-
-    sf::Vector2i mousePos = sf::Mouse::getPosition(mWindow);
-    int tileX = mousePos.x / mTileSize;
-    int tileY = mousePos.y / mTileSize;
-
-    if (tileX >= 0 && tileX < mGridWidth && tileY >= 0 && tileY < mGridHeight) {
-        if (mCurrentMode == PlacementMode::Wall)
-            mWalls[tileY][tileX] = true;
-        else if (mCurrentMode == PlacementMode::Erase)
-            mWalls[tileY][tileX] = false;
+void MenuMapEditor::update(float dt, sf::RenderWindow& window) {
+    if (!editing) {
+        btnEdit->update(window);
+        btnLoad->update(window);
+        btnSave->update(window);
+        btnBack->update(window);
+    }
+    else {
+        editor.update(dt, window);
     }
 }
 
-void MapEditor::draw(sf::RenderWindow& window) {
-    window.clear(sf::Color::Black);
-
-    sf::RectangleShape tileShape(sf::Vector2f((float)mTileSize - 1.f, (float)mTileSize - 1.f));
-    tileShape.setOutlineThickness(1.f);
-    tileShape.setOutlineColor(sf::Color(50, 50, 50));
-
-    for (int y = 0; y < mGridHeight; ++y) {
-        for (int x = 0; x < mGridWidth; ++x) {
-            tileShape.setPosition((float)(x * mTileSize), (float)(y * mTileSize));
-            if (mWalls[y][x]) {
-                tileShape.setFillColor(sf::Color::White);
-            } else {
-                tileShape.setFillColor(sf::Color::Black);
-            }
-            window.draw(tileShape);
-        }
+void MenuMapEditor::draw(sf::RenderWindow& window) {
+    if (!editing) {
+        btnEdit->draw(window);
+        btnLoad->draw(window);
+        btnSave->draw(window);
+        btnBack->draw(window);
     }
-
-    window.display();
+    else {
+        editor.draw(window);
+    }
 }
 
-MenuState MapEditor::getNextState() const {
-    return mNextState;
+MenuState MenuMapEditor::getNextState() const {
+    return next;
 }
 
-void MapEditor::saveToFile(const std::string& filename) {
-    std::ofstream ofs(filename);
-    if (!ofs) {
-        std::cerr << "Erro ao salvar mapa\n";
-        return;
-    }
-
-    for (int y = 0; y < mGridHeight; ++y) {
-        for (int x = 0; x < mGridWidth; ++x) {
-            ofs << (mWalls[y][x] ? '1' : '0');
-        }
-        ofs << '\n';
-    }
-
-    std::cout << "Mapa salvo em " << filename << std::endl;
+void MenuMapEditor::enterEditor() {
+    editing = true;
 }
 
-void MapEditor::loadFromFile(const std::string& filename) {
-    std::ifstream ifs(filename);
-    if (!ifs) {
-        std::cerr << "Erro ao carregar mapa\n";
-        return;
-    }
-
-    std::string line;
-    int y = 0;
-    while (std::getline(ifs, line) && y < mGridHeight) {
-        for (int x = 0; x < (int)line.size() && x < mGridWidth; ++x) {
-            mWalls[y][x] = (line[x] == '1');
-        }
-        ++y;
-    }
-
-    std::cout << "Mapa carregado de " << filename << std::endl;
+void MenuMapEditor::exitEditor() {
+    editing = false;
 }

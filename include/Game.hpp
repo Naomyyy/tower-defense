@@ -6,7 +6,7 @@
 #include "Enemy.hpp"
 #include "Tower.hpp"
 #include "Projectile.hpp"
-#include "Map.hpp"
+#include "Maps/Map.hpp"
 #include "Menus/MenuScreen.hpp"
 #include "Menus/MainMenu.hpp"
 #include "Menus/PauseMenu.hpp"
@@ -38,6 +38,6 @@ private:
     int mSpawnedCount = 0;
     int mMaxSpawn = 20;
 
-    MenuState mGameState;
+    MenuState mGameState = MenuState::MainMenu; // Começa no menu principal
     std::unique_ptr<MenuScreen> mCurrentMenu;
 };
