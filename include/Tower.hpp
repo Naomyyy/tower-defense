@@ -8,6 +8,12 @@
 #include "Enemy.hpp"
 #include "Projectile.hpp"
 
+enum class TowerType {
+    Archer,
+    Cannon,
+    Mage
+};
+
 // =========================================================
 // CLASSE BASE: TOWER
 // =========================================================

@@ -25,6 +25,7 @@ private:
     void render();
 
 private:
+    TowerType mSelectedTower;
     sf::RenderWindow mWindow;
     std::vector<sf::Vector2f> mPath;
 
