@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+
 // Tamanho de cada quadrado no mapa (40x40 pixels)
 const int TILE_SIZE = 40;
 // Quantidade de blocos na tela (800 / 40 = 20, 600 / 40 = 15)
@@ -12,7 +13,7 @@ class Map {
 public:
     Map();
     
-    void load(); 
+    void load(const std::string& filename);
     void draw(sf::RenderWindow& window);
 
     // Helps to know if we clicked on grass or road

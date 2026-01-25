@@ -13,6 +13,7 @@ public:
     void draw(sf::RenderWindow& window);
 
     sf::Vector2f getPosition() const;
+    const sf::Sprite& getSprite() const;
     bool isAlive() const;
     void destroy();
 
@@ -21,9 +22,10 @@ public:
     int getDamage() const;
     int getReward() const;
 
+
 private:
-    sf::Sprite sprite;
-    sf::Vector2f position;
+    sf::Sprite mSprite;
+    sf::Vector2f mPosition;
 
     int health;
     int damage;
@@ -33,4 +35,9 @@ private:
     // variáveis para movimento e estado
     size_t currentPathIndex = 0;
     bool alive = true;
+
+    // variaveis para representar a vida do inimigo
+    sf::RectangleShape mHealthBarBack;
+    sf::RectangleShape mHealthBarFront;
+    int maxHealth;
 };

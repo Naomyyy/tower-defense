@@ -6,13 +6,15 @@ enum class MenuState {
     MainMenu,
     Pause,
     Gameplay,
-    MapEditor
+    MapEditor,
+    GameOver, 
+    Win,
+    Difficulty
 };
 
 class MenuScreen {
 public:
     virtual ~MenuScreen() = default;
-    // Agora RECEBE a janela
     virtual void handleEvent(const sf::Event& ev, sf::RenderWindow& window) = 0;
     virtual void update(float dt, sf::RenderWindow& window) = 0;
     virtual void draw(sf::RenderWindow& win) = 0;

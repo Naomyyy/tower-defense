@@ -1,4 +1,6 @@
 #include "Maps/Map.hpp"
+#include <iostream>
+#include <fstream>
 
 Map::Map() {
     // Configura visual básico (depois usamos texturas)
@@ -8,122 +10,112 @@ Map::Map() {
     mRoadShape.setSize(sf::Vector2f(TILE_SIZE, TILE_SIZE));
     mRoadShape.setFillColor(sf::Color(194, 178, 128)); // Cor de areia/estrada
     
-    load();
+    load("assets/map_normal.txt");
 }
 
-void Map::load() {
-    // 0 = Grama, 1 = Estrada
-    // Desenhe o caminho alterando os 0s para 1s
-    int tempMap[GRID_HEIGHT][GRID_WIDTH] = {
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, // Começa na esquerda
-        {0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1}, // Sai na direita
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-    };
+void Map::load(const std::string& filename) {
+    std::ifstream file(filename);
+    
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open map file: " << filename << std::endl;
+        return;
+    }
 
-    // Copia para a variável da classe
-    for(int y=0; y<GRID_HEIGHT; ++y) {
-        for(int x=0; x<GRID_WIDTH; ++x) {
-            mGrid[y][x] = tempMap[y][x];
+    // 1. Carrega a matriz do arquivo .txt 
+    // Corrigido: Adicionado o loop de 'y' que faltava no seu código
+    for(int y = 0; y < GRID_HEIGHT; ++y) {
+        for(int x = 0; x < GRID_WIDTH; ++x) {
+            if (!(file >> mGrid[y][x])) {
+                mGrid[y][x] = 0; 
+            }
         }
     }
+    file.close();
+
+    // 2. Reinicia o sistema de Waypoints
     mPath.clear();
-        int currentX = -1;
-        int currentY = -1;
-        
-        // 1. Encontrar o Ponto de Partida (Primeira Coluna onde a estrada começa)
-        for (int y = 0; y < GRID_HEIGHT; ++y) {
-            if (mGrid[y][0] == 1) {
-                currentX = 0;
-                currentY = y;
-                break;
-            }
+
+    // 3. Criamos uma cópia temporária para o rastreamento
+    // Isso evita que o valor '2' (visitado) estrague o desenho do mapa original
+    int tempGrid[GRID_HEIGHT][GRID_WIDTH];
+    for(int y=0; y<GRID_HEIGHT; ++y){
+        for(int x=0; x<GRID_WIDTH; ++x){
+            tempGrid[y][x] = mGrid[y][x];
         }
-        if (currentX == -1) return; 
+    }
 
-        // O ponto de partida é sempre um waypoint
-        mPath.push_back(getCenterCoords(currentX, currentY));
+    int currentX = -1;
+    int currentY = -1;
         
-        // Marca o tile inicial como visitado ('2')
-        mGrid[currentY][currentX] = 2; 
-        
-        // Assumimos que o movimento inicial é para a direita (dx=1, dy=0)
-        int lastDirX = 1; 
-        int lastDirY = 0; 
-        
-        // Array de vizinhos: [dy, dx]
-        int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}; // Direita, Esquerda, Baixo, Cima
+    // Encontrar o Ponto de Partida (Primeira Coluna)
+    for (int y = 0; y < GRID_HEIGHT; ++y) {
+        if (tempGrid[y][0] == 1) {
+            currentX = 0;
+            currentY = y;
+            break;
+        }
+    }
 
-        // 2. Rastreamento e Registro de Curvas
-        while (true) {
-            bool foundNext = false;
-            int nextX = -1, nextY = -1;
-            int newDirX = 0, newDirY = 0;
+    if (currentX == -1) return; 
 
-            // Procura o próximo tile ('1')
-            for (int i = 0; i < 4; ++i) {
-                int checkX = currentX + dir[i][1];
-                int checkY = currentY + dir[i][0];
+    mPath.push_back(getCenterCoords(currentX, currentY));
+    tempGrid[currentY][currentX] = 2; // Marca na CÓPIA
+    
+    int lastDirX = 1; 
+    int lastDirY = 0; 
+    int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-                if (checkX >= 0 && checkX < GRID_WIDTH &&
-                    checkY >= 0 && checkY < GRID_HEIGHT &&
-                    mGrid[checkY][checkX] == 1) 
-                {
-                    // Encontrou o próximo tile válido
-                    nextX = checkX;
-                    nextY = checkY;
-                    newDirX = dir[i][1];
-                    newDirY = dir[i][0];
-                    foundNext = true;
-                    break; 
-                }
-            }
+    while (true) {
+        bool foundNext = false;
+        int nextX = -1, nextY = -1;
+        int newDirX = 0, newDirY = 0;
 
-            if (!foundNext) {
-                // FIM DO CAMINHO: Registra o waypoint final e sai
-                mPath.push_back(getCenterCoords(currentX, currentY));
+        for (int i = 0; i < 4; ++i) {
+            int checkX = currentX + dir[i][1];
+            int checkY = currentY + dir[i][0];
+
+            if (checkX >= 0 && checkX < GRID_WIDTH &&
+                checkY >= 0 && checkY < GRID_HEIGHT &&
+                tempGrid[checkY][checkX] == 1) // Procura na CÓPIA
+            {
+                nextX = checkX;
+                nextY = checkY;
+                newDirX = dir[i][1];
+                newDirY = dir[i][0];
+                foundNext = true;
                 break; 
             }
-
-            // Se a direção de movimento mudou, o ponto ATUAL é uma curva (Waypoint)
-            if (newDirX != lastDirX || newDirY != lastDirY) {
-                mPath.push_back(getCenterCoords(currentX, currentY));
-                
-                // Atualiza a direção
-                lastDirX = newDirX;
-                lastDirY = newDirY;
-            }
-
-            // Movimento para o próximo tile
-            currentX = nextX;
-            currentY = nextY;
-            mGrid[currentY][currentX] = 2; // Marca como visitado (não será encontrado novamente)
         }
+
+        if (!foundNext) {
+            mPath.push_back(getCenterCoords(currentX, currentY));
+            break; 
+        }
+
+        if (newDirX != lastDirX || newDirY != lastDirY) {
+            mPath.push_back(getCenterCoords(currentX, currentY));
+            lastDirX = newDirX;
+            lastDirY = newDirY;
+        }
+
+        currentX = nextX;
+        currentY = nextY;
+        tempGrid[currentY][currentX] = 2; // Marca na CÓPIA
+    }
 }
 
 void Map::draw(sf::RenderWindow& window) {
     for(int y=0; y<GRID_HEIGHT; ++y) {
         for(int x=0; x<GRID_WIDTH; ++x) {
-            // Calcula a posição na tela (x * 40, y * 40)
             sf::Vector2f pos(x * TILE_SIZE, y * TILE_SIZE);
             
-            if (mGrid[y][x] == 0) {
-                mGrassShape.setPosition(pos);
-                window.draw(mGrassShape);
-            } else if (mGrid[y][x] == 1) {
+            // Se for 1, desenha estrada. Se for 0, desenha grama.
+            if (mGrid[y][x] == 1) {
                 mRoadShape.setPosition(pos);
                 window.draw(mRoadShape);
+            } else {
+                mGrassShape.setPosition(pos);
+                window.draw(mGrassShape);
             }
         }
     }

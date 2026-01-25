@@ -11,6 +11,11 @@
 #include "Menus/MainMenu.hpp"
 #include "Menus/PauseMenu.hpp"
 #include "Menus/MenuMapEditor.hpp"
+#include "Menus/Button.hpp"
+#include "Menus/GameOverMenu.hpp"
+#include "Menus/WinMenu.hpp"  
+#include "Menus/DifficultyMenu.hpp"  
+
 
 class Game {
 public:
@@ -23,6 +28,7 @@ private:
     void update(float dt);
     void handleCollisions();
     void render();
+    void setupDifficulty(int choice);
 
 private:
     TowerType mSelectedTower;
@@ -33,12 +39,20 @@ private:
     std::vector<std::unique_ptr<Tower>> mTowers;
     std::vector<Projectile> mProjectiles;
     Map mMap;
+    bool mIsTowerSelected;
 
     float mSpawnTimer = 0.f;
     float mSpawnInterval = 2.f; // intervalo entre spawns (segundos)
     int mSpawnedCount = 0;
     int mMaxSpawn = 20;
+    float mEnemySpeedMultiplier;
 
     MenuState mGameState = MenuState::MainMenu; // Começa no menu principal
     std::unique_ptr<MenuScreen> mCurrentMenu;
+
+    int mMoney;
+    sf::Font mFont; 
+    sf::Font mNumberFont;
+    sf::Text mMoneyUI;
+    std::vector<std::unique_ptr<Button>> mShopButtons;
 };

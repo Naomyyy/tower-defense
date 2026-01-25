@@ -10,8 +10,8 @@ Button::Button(const std::string& label, sf::Vector2f pos, sf::Font& font, unsig
 
     // Caixa do botão baseada no tamanho do texto
     box.setSize({
-        text.getLocalBounds().width + 30.f,
-        text.getLocalBounds().height + 20.f
+        text.getLocalBounds().width + 50.f, 
+        text.getLocalBounds().height + 25.f
     });
 
     box.setFillColor(normalColor);
@@ -56,4 +56,7 @@ bool Button::clicked(sf::RenderWindow& win, const sf::Event& ev) {
 void Button::draw(sf::RenderWindow& win) {
     win.draw(box);
     win.draw(text);
+}
+sf::Vector2f Button::getPosition() const{
+    return box.getPosition();
 }

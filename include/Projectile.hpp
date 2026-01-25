@@ -11,11 +11,11 @@ public:
     void draw(sf::RenderWindow& window);
     
     // Getters e Setters
+    const sf::Sprite& getSprite() const;
     sf::Vector2f getPosition() const;
     bool isAlive() const;
     void destroy(); 
 
-    // O método que estava faltando:
     int getDamage() const;
 
 private:

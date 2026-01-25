@@ -10,18 +10,23 @@ Projectile::Projectile(sf::Vector2f position, sf::Vector2f direction, float spee
     const sf::Texture& texture = AssetManager::getInstance().getTexture(textureName);
     mSprite.setTexture(texture);
 
-    // 2. Definir a origem no centro da imagem
+    // 2. Controlar o tamanho
+    float targetSize = 20.0f; // Ajuste este número para aumentar ou diminuir o tiro
+    float scaleFactor = targetSize / (float)texture.getSize().x;
+    mSprite.setScale(scaleFactor, scaleFactor);
+
+    // 3. Definir a origem no centro da imagem
     // Isso é crucial para que o projétil gire em torno do próprio eixo e não do canto
     sf::FloatRect bounds = mSprite.getLocalBounds();
     mSprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
 
-    // 3. Posicionamento
+    // 4. Posicionamento
     mSprite.setPosition(position);
 
-    // 4. Calcular Velocidade
+    // 5. Calcular Velocidade
     mVelocity = direction * speed;
 
-    // 5. Calcular Rotação (Matemática para "olhar" para a direção)
+    // 6. Calcular Rotação (Matemática para "olhar" para a direção)
     // atan2 devolve o ângulo em radianos, multiplicamos por 180/PI para ter graus
     float angle = std::atan2(direction.y, direction.x) * 180.f / 3.14159265f;
     mSprite.setRotation(angle);
@@ -39,10 +44,13 @@ void Projectile::draw(sf::RenderWindow& window) {
     window.draw(mSprite);
 }
 
-// --- Getters e Setters ---
 
 sf::Vector2f Projectile::getPosition() const {
     return mSprite.getPosition();
+}
+
+const sf::Sprite& Projectile::getSprite() const{
+    return mSprite;
 }
 
 bool Projectile::isAlive() const {

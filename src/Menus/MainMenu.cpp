@@ -27,7 +27,7 @@ void MainMenu::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
         sf::Vector2f mousePos(ev.mouseButton.x, ev.mouseButton.y);
 
         if (playButton.getGlobalBounds().contains(mousePos)) {
-            next = MenuState::Gameplay;
+            next = MenuState::Difficulty;
         }
         else if (editorButton.getGlobalBounds().contains(mousePos)) {
             next = MenuState::MapEditor;
