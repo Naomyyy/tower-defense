@@ -23,6 +23,9 @@ private:
     std::unique_ptr<Button> mHardBtn;
     MenuState mNextState = MenuState::None;
     int mSelection = 1; // 0: Easy, 1: Normal, 2: Hard
+
+    sf::Texture mBackgroundTexture;
+    sf::Sprite mBackgroundSprite;
 };
 
 #endif

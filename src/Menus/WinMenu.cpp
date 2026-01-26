@@ -2,43 +2,59 @@
 #include <iostream>
 
 WinMenu::WinMenu(sf::RenderWindow& window) : mWindow(window) {
-    // Carrega a fonte (certifique-se de que font.ttf existe em assets)
+    // -----------------------------------------------------------
+    // 1. CONFIGURAÇÃO DA IMAGEM DE FUNDO
+    // -----------------------------------------------------------
+    // Certifique-se de ter uma imagem de vitória na pasta assets!
+    if (!mBackgroundTexture.loadFromFile("assets/victory-image.png")) {
+        std::cerr << "ERRO: Nao foi possivel carregar assets/victory-image.png" << std::endl;
+        // Se falhar, o sprite ficará branco, mas o jogo não fecha.
+    }
+
+    mBackgroundSprite.setTexture(mBackgroundTexture);
+
+    // Ajusta a escala para preencher a janela (igual fizemos nos outros)
+    sf::Vector2u textureSize = mBackgroundTexture.getSize();
+    sf::Vector2u windowSize = mWindow.getSize();
+    
+    float scaleX = (float)windowSize.x / textureSize.x;
+    float scaleY = (float)windowSize.y / textureSize.y;
+    
+    mBackgroundSprite.setScale(scaleX, scaleY);
+
+    // -----------------------------------------------------------
+    // 2. CONFIGURAÇÃO DO TEXTO E BOTÃO
+    // -----------------------------------------------------------
     if (!mFont.loadFromFile("assets/font.ttf")) {
         std::cerr << "Error loading font in WinMenu" << std::endl;
     }
+   
+    // --- CÁLCULO PARA CENTRALIZAR O BOTÃO PERFEITAMENTE ---
+    std::string btnText = "RETURN TO MENU";
+    int btnSize = 60;
 
-    // Configuração do texto de Vitória
-    mText.setFont(mFont);
-    mText.setString("YOU WON!");
-    mText.setCharacterSize(60);
-    mText.setFillColor(sf::Color::White);
-    
-    // Centralização básica do texto
-    sf::FloatRect textBounds = mText.getLocalBounds();
-    mText.setOrigin(textBounds.width / 2.0f, textBounds.height / 2.0f);
-    mText.setPosition(window.getSize().x / 2.0f, window.getSize().y / 4.0f);
-    float buttonX = (window.getSize().x / 2.0f) - (75.0f); // 75.f é metade da largura média do botão
-    float buttonY = window.getSize().y / 1.8f; // Posiciona um pouco abaixo do meio
-    
-    mMenuButton = std::make_unique<Button>("RETURN TO MENU", sf::Vector2f(buttonX, buttonY), mFont, 24);
+    // Mede o tamanho que o texto do botão terá
+    sf::Text tempText(btnText, mFont, btnSize);
+    sf::FloatRect btnBounds = tempText.getLocalBounds();
+
+    mMenuButton = std::make_unique<Button>(btnText, sf::Vector2f(windowSize.x / 2.0f, 300.f), mFont, btnSize);
 }
 
 void WinMenu::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
-    // Se o botão for clicado, define o próximo estado para MainMenu
     if (mMenuButton->clicked(window, ev)) {
         mNextState = MenuState::MainMenu;
     }
 }
 
 void WinMenu::update(float dt, sf::RenderWindow& window) {
-    // Atualiza o estado visual do botão (hover, etc)
     mMenuButton->update(window);
 }
 
 void WinMenu::draw(sf::RenderWindow& window) {
-    // Limpa com um fundo escuro para destacar o texto verde
-    window.clear(sf::Color(0, 20, 0)); 
+    // 1. DESENHA O FUNDO PRIMEIRO (Removemos o clear com cor sólida)
+    window.draw(mBackgroundSprite);
     
+    // 2. DESENHA O RESTO POR CIMA
     window.draw(mText);
     mMenuButton->draw(window);
 }

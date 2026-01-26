@@ -1,62 +1,71 @@
 #include "Menus/Button.hpp"
 
 Button::Button(const std::string& label, sf::Vector2f pos, sf::Font& font, unsigned int size) {
-
-    // Setup do texto
+    // 1. Configurar o Texto
     text.setFont(font);
     text.setString(label);
     text.setCharacterSize(size);
-    text.setFillColor(sf::Color::Black);
+    text.setFillColor(normalColor); // Começa Branco
 
-    // Caixa do botão baseada no tamanho do texto
-    box.setSize({
-        text.getLocalBounds().width + 50.f, 
-        text.getLocalBounds().height + 25.f
-    });
+    // --- LÓGICA DE CENTRALIZAÇÃO DO TEXTO ---
+    // Pega o retângulo do texto para achar o centro
+    sf::FloatRect textRect = text.getLocalBounds();
+    // Define a origem do texto no exato centro dele
+    text.setOrigin(textRect.left + textRect.width / 2.0f,
+                   textRect.top  + textRect.height / 2.0f);
+    // Posiciona o texto na coordenada passada
+    text.setPosition(pos);
+    // ----------------------------------------
 
-    box.setFillColor(normalColor);
+    // 2. Configurar a Caixa (Hitbox invisível)
+    // A caixa serve apenas para o mouse detectar o clique
+    sf::Vector2f padding(20.f, 10.f); // Espaço extra para facilitar o clique
+    box.setSize(sf::Vector2f(textRect.width + padding.x * 2, textRect.height + padding.y * 2));
+    
+    // Centraliza a caixa na mesma posição do texto
+    box.setOrigin(box.getSize() / 2.0f);
     box.setPosition(pos);
 
-    // Centralização do texto na caixa
-    text.setPosition(
-        pos.x + 15.f,
-        pos.y + 10.f - text.getLocalBounds().top
-    );
+    // DEIXA A CAIXA INVISÍVEL (Sem borda, sem fundo)
+    box.setFillColor(sf::Color::Transparent); 
+    // Se quiser ver a caixa para debug, descomente a linha abaixo:
+    // box.setOutlineColor(sf::Color::Red); box.setOutlineThickness(1);
 }
 
 void Button::update(sf::RenderWindow& win) {
     sf::Vector2f mp = (sf::Vector2f)sf::Mouse::getPosition(win);
-
     isHovered = box.getGlobalBounds().contains(mp);
 
     if (isHovered) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            box.setFillColor(pressedColor);
-            isPressed = true;
+            text.setFillColor(pressedColor); // Cor ao clicar
         } else {
-            box.setFillColor(hoverColor);
+            text.setFillColor(hoverColor);   // Cor ao passar o mouse (Verde)
         }
     } else {
-        box.setFillColor(normalColor);
-        isPressed = false;
+        text.setFillColor(normalColor);      // Cor normal (Branco)
     }
 }
 
 bool Button::clicked(sf::RenderWindow& win, const sf::Event& ev) {
     if (ev.type == sf::Event::MouseButtonPressed &&
         ev.mouseButton.button == sf::Mouse::Left) {
-
-        sf::Vector2f mp(ev.mouseButton.x, ev.mouseButton.y);
-
+        
+        sf::Vector2f mp((float)ev.mouseButton.x, (float)ev.mouseButton.y);
         return box.getGlobalBounds().contains(mp);
     }
     return false;
 }
 
 void Button::draw(sf::RenderWindow& win) {
-    win.draw(box);
-    win.draw(text);
+    win.draw(box);  // Desenha a caixa (invisível, mas necessária se tiver debug)
+    win.draw(text); // Desenha o texto por cima
 }
-sf::Vector2f Button::getPosition() const{
+
+sf::Vector2f Button::getPosition() const {
     return box.getPosition();
+}
+
+sf::FloatRect Button::getGlobalBounds() const {
+    return box.getGlobalBounds();
 }

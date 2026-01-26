@@ -26,6 +26,10 @@ private:
     
     // Controla para qual estado o jogo deve ir após o clique
     MenuState mNextState = MenuState::None;
+
+    sf::Texture mBackgroundTexture;
+    sf::Sprite mBackgroundSprite;
+
 };
 
 #endif

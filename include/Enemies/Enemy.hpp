@@ -21,6 +21,7 @@ public:
     void takeDamage(int amount);
     int getDamage() const;
     int getReward() const;
+    float getProgress() const { return mProgress; } 
 
 
 private:
@@ -31,6 +32,8 @@ private:
     int damage;
     float speed;
     int reward;
+
+    float mProgress = 0.f;
 
     // variáveis para movimento e estado
     size_t currentPathIndex = 0;

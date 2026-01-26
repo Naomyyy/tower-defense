@@ -1,4 +1,4 @@
-#include "Enemy.hpp"
+#include "Enemies/Enemy.hpp"
 #include "AssetManager.hpp" 
 
 Enemy::Enemy(sf::Vector2f startPos, const std::string& textureName,
@@ -70,6 +70,18 @@ void Enemy::update(float dt, const std::vector<sf::Vector2f>& path) {
     } else {
         mHealthBarFront.setFillColor(sf::Color::Red);
     }
+
+    if (!path.empty()) {
+        sf::Vector2f start = path.front();
+        sf::Vector2f end = path.back();
+        sf::Vector2f pos = getPosition();
+
+        float totalDist = std::hypot(end.x - start.x, end.y - start.y);
+        float traveled = std::hypot(pos.x - start.x, pos.y - start.y);
+        mProgress = totalDist > 0 ? traveled / totalDist : 0.f;
+        if (mProgress > 1.f) mProgress = 1.f;
+    }
+
 }
 
 void Enemy::draw(sf::RenderWindow& window) {

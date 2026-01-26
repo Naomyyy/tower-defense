@@ -3,18 +3,32 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
-#include "Enemy.hpp"
-#include "Tower.hpp"
+
+#include "Enemies/Golem.hpp"
+#include "Enemies/Ghost.hpp"
+#include "Enemies/Minotaur.hpp"
+
+#include "Towers/Tower.hpp" 
+#include "Towers/ArcherTower.hpp"
+#include "Towers/CannonTower.hpp"
+#include "Towers/MageTower.hpp"
+
 #include "Projectile.hpp"
 #include "Maps/Map.hpp"
+
 #include "Menus/MenuScreen.hpp"
 #include "Menus/MainMenu.hpp"
 #include "Menus/PauseMenu.hpp"
-#include "Menus/MenuMapEditor.hpp"
 #include "Menus/Button.hpp"
 #include "Menus/GameOverMenu.hpp"
 #include "Menus/WinMenu.hpp"  
 #include "Menus/DifficultyMenu.hpp"  
+
+enum class Difficulty {
+    Easy,
+    Normal,
+    Hard
+};
 
 
 class Game {
@@ -55,4 +69,10 @@ private:
     sf::Font mNumberFont;
     sf::Text mMoneyUI;
     std::vector<std::unique_ptr<Button>> mShopButtons;
+    
+    int mLives;
+    sf::Text mLivesUI;
+
+    Difficulty mDifficulty;
+
 };

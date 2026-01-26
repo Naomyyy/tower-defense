@@ -7,9 +7,9 @@ private:
     sf::Text text;
     sf::RectangleShape box;
 
-    sf::Color normalColor   = sf::Color(200, 200, 200);
-    sf::Color hoverColor    = sf::Color(255, 255, 150);
-    sf::Color pressedColor  = sf::Color(180, 180, 100);
+    sf::Color normalColor   = sf::Color::White;      // Texto Branco
+    sf::Color hoverColor    = sf::Color::Green;      // Hover Verde
+    sf::Color pressedColor  = sf::Color(0, 100, 0);  // Clique Verde Escuro
 
     bool isHovered = false;
     bool isPressed = false;
@@ -23,5 +23,5 @@ public:
     void draw(sf::RenderWindow& win);
 
     sf::Vector2f getPosition() const;
+    sf::FloatRect getGlobalBounds() const; // Útil para centralizar
 };
-#pragma once
