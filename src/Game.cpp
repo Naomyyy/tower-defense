@@ -366,7 +366,7 @@ void Game::setupDifficulty(int choice) {
     if (choice == 0) { // EASY
         mDifficulty = Difficulty::Easy;
         mMap.load("assets/map_easy.txt");
-        mMoney = 100;
+        mMoney = 150;
         mLives = 20;
         mMaxSpawn = 20;
         mEnemySpeedMultiplier = 0.8f;
