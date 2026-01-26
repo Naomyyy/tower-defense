@@ -37,11 +37,15 @@ DifficultyMenu::DifficultyMenu(sf::RenderWindow& window) {
     // mTitle.setPosition(window.getSize().x / 2.f - 200.f, 100.f);
 
 
-    // Botões
-    float centerX = window.getSize().x / 2.f - 60.f; // Seu ajuste manual
-    mEasyBtn = std::make_unique<Button>("EASY", sf::Vector2f(centerX, 250.f), mFont, 30);
-    mNormalBtn = std::make_unique<Button>("NORMAL", sf::Vector2f(centerX, 330.f), mFont, 30);
-    mHardBtn = std::make_unique<Button>("HARD", sf::Vector2f(centerX, 410.f), mFont, 30);
+    // Espaçamento entre os botões
+    float spacing = 150.f; // distância entre os botões
+    float startX = window.getSize().x / 2.f - spacing; // centraliza o conjunto
+    float posY = 250.f; // mesma altura para todos
+
+    mEasyBtn   = std::make_unique<Button>("EASY",   sf::Vector2f(startX, posY), mFont, 30);
+    mNormalBtn = std::make_unique<Button>("NORMAL", sf::Vector2f(startX + spacing, posY), mFont, 30);
+    mHardBtn   = std::make_unique<Button>("HARD",   sf::Vector2f(startX + 2*spacing, posY), mFont, 30);
+
 }
 
 void DifficultyMenu::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
