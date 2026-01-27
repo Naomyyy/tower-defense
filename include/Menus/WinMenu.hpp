@@ -10,25 +10,21 @@ class WinMenu : public MenuScreen {
 public:
     explicit WinMenu(sf::RenderWindow& window);
     
-    // Métodos obrigatórios herdados de MenuScreen
     void handleEvent(const sf::Event& ev, sf::RenderWindow& window) override;
     void update(float dt, sf::RenderWindow& window) override;
     void draw(sf::RenderWindow& window) override;
     MenuState getNextState() const override;
 
 private:
-    sf::RenderWindow& mWindow;
-    sf::Font mFont;
-    sf::Text mText;
+    sf::RenderWindow& window;
+    sf::Font font;
+    sf::Text text;
     
-    // Botão para voltar ao início
-    std::unique_ptr<Button> mMenuButton;
-    
-    // Controla para qual estado o jogo deve ir após o clique
-    MenuState mNextState = MenuState::None;
+    std::unique_ptr<Button> menuButton;
+    MenuState nextState = MenuState::None;
 
-    sf::Texture mBackgroundTexture;
-    sf::Sprite mBackgroundSprite;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 
 };
 

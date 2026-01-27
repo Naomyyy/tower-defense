@@ -1,12 +1,12 @@
 #pragma once
 #include "MenuScreen.hpp"
-#include "Menus/Button.hpp" // <--- Inclua a sua classe Button
+#include "Menus/Button.hpp" 
 #include <SFML/Graphics.hpp>
 
 class MainMenu : public MenuScreen {
 public:
     explicit MainMenu(sf::RenderWindow& window);
-    ~MainMenu(); // <--- Necessário para deletar os botões (free memory)
+    ~MainMenu(); 
 
     void handleEvent(const sf::Event& ev, sf::RenderWindow& window) override;
     void update(float dt, sf::RenderWindow& window) override;
@@ -15,14 +15,13 @@ public:
     MenuState getNextState() const override;
 
 private:
-    sf::RenderWindow& mWindow;
+    sf::RenderWindow& window;
     sf::Font font;
     sf::Text title;
 
     Button* playButton;
-
    
-    MenuState next = MenuState::None;
+    MenuState nextState = MenuState::None;
 
     sf::Texture backgroundTexture; 
     sf::Sprite backgroundSprite;

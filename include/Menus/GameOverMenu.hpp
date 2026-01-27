@@ -2,7 +2,7 @@
 #include "MenuScreen.hpp"
 #include "Button.hpp"
 #include <memory>
-#include <SFML/Graphics.hpp> // Garanta que isso está incluido
+#include <SFML/Graphics.hpp> 
 
 class GameOverMenu : public MenuScreen {
 public:
@@ -13,13 +13,12 @@ public:
     MenuState getNextState() const override;
 
 private:
-    sf::RenderWindow& mWindow;
-    sf::Font mFont;
-    sf::Text mText;
-    std::unique_ptr<Button> mMenuButton;
-    MenuState mNextState = MenuState::None;
+    sf::RenderWindow& window;
+    sf::Font font;
+    sf::Text text;
+    std::unique_ptr<Button> menuButton;
+    MenuState nextState = MenuState::None;
 
-    // --- ADICIONE ISTO AQUI EMBAIXO ---
-    sf::Texture mBackgroundTexture;
-    sf::Sprite mBackgroundSprite;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 };

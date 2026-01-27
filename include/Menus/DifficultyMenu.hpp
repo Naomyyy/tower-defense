@@ -16,16 +16,16 @@ public:
     MenuState getNextState() const override;
 
 private:
-    sf::Font mFont;
-    sf::Text mTitle;
-    std::unique_ptr<Button> mEasyBtn;
-    std::unique_ptr<Button> mNormalBtn;
-    std::unique_ptr<Button> mHardBtn;
-    MenuState mNextState = MenuState::None;
-    int mSelection = 1; // 0: Easy, 1: Normal, 2: Hard
+    sf::Font font;
+    sf::Text title;
+    std::unique_ptr<Button> easyBtn;
+    std::unique_ptr<Button> normalBtn;
+    std::unique_ptr<Button> hardBtn;
+    MenuState nextState = MenuState::None;
+    int selection = 1; // 0: Easy, 1: Normal, 2: Hard
 
-    sf::Texture mBackgroundTexture;
-    sf::Sprite mBackgroundSprite;
+    sf::Texture backgroundTexture;
+    sf::Sprite backgroundSprite;
 };
 
 #endif

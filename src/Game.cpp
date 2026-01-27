@@ -199,35 +199,24 @@ void Game::update(float dt) {
     }
 
     // Update Enemies and handle path completion
-    for (auto it = enemies.begin(); it != enemies.end(); ) {
-        (*it)->update(dt, path);
+    for (auto& enemy : enemies) {
+        enemy->update(dt, path);
 
-        sf::Vector2f enemyPos = (*it)->getPosition();
-        sf::Vector2f lastWaypoint = path.back();
-        float dx = lastWaypoint.x - enemyPos.x;
-        float dy = lastWaypoint.y - enemyPos.y;
+        sf::Vector2f diff = enemy->getPosition() - path.back();
 
-        if ((dx*dx + dy*dy) < 100.f && (*it)->isAlive()) {
+        if (enemy->isAlive() && (diff.x * diff.x + diff.y * diff.y) < 100.f) {
             lives--;
-            (*it)->takeDamage(99999); // "Kill" the enemy as it reaches the end
-            it = enemies.erase(it);
-
+            enemy->destroy(); 
+    
             if (lives <= 0) {
                 gameState = MenuState::GameOver;
                 currentMenu = std::make_unique<GameOverMenu>(window);
                 return;
             }
-            continue;
-        }
-
-        if (!(*it)->isAlive()) {
-            it = enemies.erase(it);
-        } else {
-            ++it;
         }
     }
 
-    // Update Towers and generate projectiles via optional return
+    // Update Towers and generate projectiles
     for (auto& tower : towers) {
         if (auto proj = tower->update(dt, enemies)) {
             projectiles.push_back(*proj);
@@ -245,7 +234,7 @@ void Game::update(float dt) {
         currentMenu = std::make_unique<WinMenu>(window);
         return;
     }
-
+    // Update UI Strings
     moneyUI.setString("GOLD: " + std::to_string(money));
     livesUI.setString("LIFE " + std::to_string(lives));
 }
@@ -341,7 +330,7 @@ void Game::setupDifficulty(int choice) {
     if (choice == 0) { // EASY
         difficulty = Difficulty::Easy;
         map.load("assets/map_easy.txt");
-        money = 100;
+        money = 150;
         lives = 10;
         maxSpawn = 20;
         enemySpeedMultiplier = 0.8f;

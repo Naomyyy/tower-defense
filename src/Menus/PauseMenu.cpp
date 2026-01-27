@@ -2,75 +2,60 @@
 #include <iostream>
 
 PauseMenu::PauseMenu(sf::RenderWindow& window)
-    : mWindow(window)
+    : window(window)
 {
-    // -----------------------------------------------------------
-    // 1. CAPTURAR A TELA DO JOGO (O TRUQUE DA TRANSPARÊNCIA)
-    // -----------------------------------------------------------
-    // Cria uma textura do tamanho da janela
-    mBackgroundTexture.create(window.getSize().x, window.getSize().y);
+    // Initialize the texture with the current window dimensions
+    backgroundTexture.create(window.getSize().x, window.getSize().y);
     
-    // Copia o conteúdo atual da janela (o jogo pausado) para a textura
-    mBackgroundTexture.update(window);
+    // Copy the current frame buffer (the paused game state) into the texture
+    backgroundTexture.update(window);
     
-    // Aplica a textura no sprite
-    mBackgroundSprite.setTexture(mBackgroundTexture);
+    // Assign the captured texture to the background sprite
+    backgroundSprite.setTexture(backgroundTexture);
 
-    // -----------------------------------------------------------
-    // 2. CRIAR O FILTRO ESCURO (OVERLAY)
-    // -----------------------------------------------------------
-    mOverlay.setSize(sf::Vector2f(window.getSize()));
-    
-    // Cor Preta com Alpha 150 (0 = invisível, 255 = sólido)
-    // Ajuste o 150 para mais claro ou mais escuro
-    mOverlay.setFillColor(sf::Color(0, 0, 0, 150));
+    overlay.setSize(sf::Vector2f(window.getSize()));
+    overlay.setFillColor(sf::Color(0, 0, 0, 150));
 
-    // -----------------------------------------------------------
-    // 3. SEU CÓDIGO DE BOTÕES E FONTE
-    // -----------------------------------------------------------
-    if (!mFont.loadFromFile("assets/font.ttf")) {
-        // Trate erro
-        std::cerr << "Erro ao carregar fonte no PauseMenu" << std::endl;
+    if (!font.loadFromFile("assets/font.ttf")) {
+        std::cerr << "ERROR: Failed to load font in PauseMenu" << std::endl;
     }
 
-    // Centralizando os botões
+    // Determine the horizontal center of the screen for UI alignment
     float centerX = window.getSize().x / 2.0f;
     
-    // Ajustei o X para centralizar com base num tamanho estimado ou fixo
-    // (Se quiser centralização perfeita, use a lógica do BoundingBox que ensinei antes)
-    mResumeButton = std::make_unique<Button>("Resume", sf::Vector2f(centerX - 100.f, 200.f), mFont, 32);
-    mMainMenuButton = std::make_unique<Button>("Main Menu", sf::Vector2f(centerX - 120.f, 300.f), mFont, 32);
+    // Instantiate navigation buttons using smart pointers for safe memory management
+    resumeButton = std::make_unique<Button>("Resume", sf::Vector2f(centerX - 100.f, 200.f), font, 32);
+    mainMenuButton = std::make_unique<Button>("Main Menu", sf::Vector2f(centerX - 120.f, 300.f), font, 32);
 }
 
 void PauseMenu::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
-    if (mResumeButton->clicked(window, ev)) {
-        mNextState = MenuState::Gameplay;
-    } else if (mMainMenuButton->clicked(window, ev)) {
-        mNextState = MenuState::MainMenu;
+    // Handle menu interactions and set the next state for the game engine
+    if (resumeButton->clicked(window, ev)) {
+        nextState = MenuState::Gameplay;
+    } else if (mainMenuButton->clicked(window, ev)) {
+        nextState = MenuState::MainMenu;
     }
 }
 
 void PauseMenu::update(float dt, sf::RenderWindow& window) {
-    mResumeButton->update(window);
-    mMainMenuButton->update(window);
+    // Update button visual feedback 
+    resumeButton->update(window);
+    mainMenuButton->update(window);
 }
 
 void PauseMenu::draw(sf::RenderWindow& window) {
-    // ATENÇÃO: NÃO use window.clear() aqui!
-    // Se usar clear, você apaga tudo.
     
-    // 1. Desenha o "print" do jogo congelado
-    window.draw(mBackgroundSprite);
+    //Draw the "snapshot" of the paused game
+    window.draw(backgroundSprite);
 
-    // 2. Desenha o retângulo escuro por cima para dar destaque ao menu
-    window.draw(mOverlay);
+    // Draw the dark overlay to prioritize the menu visibility
+    window.draw(overlay);
 
-    // 3. Desenha os botões
-    mResumeButton->draw(window);
-    mMainMenuButton->draw(window);
-
+    // Render the UI components on top
+    resumeButton->draw(window);
+    mainMenuButton->draw(window);
 }
 
 MenuState PauseMenu::getNextState() const {
-    return mNextState;
+    return nextState;
 }

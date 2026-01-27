@@ -1,64 +1,57 @@
 #include "Menus/WinMenu.hpp"
 #include <iostream>
 
-WinMenu::WinMenu(sf::RenderWindow& window) : mWindow(window) {
-    // -----------------------------------------------------------
-    // 1. CONFIGURAÇÃO DA IMAGEM DE FUNDO
-    // -----------------------------------------------------------
-    // Certifique-se de ter uma imagem de vitória na pasta assets!
-    if (!mBackgroundTexture.loadFromFile("assets/victory-image.png")) {
-        std::cerr << "ERRO: Nao foi possivel carregar assets/victory-image.png" << std::endl;
-        // Se falhar, o sprite ficará branco, mas o jogo não fecha.
+WinMenu::WinMenu(sf::RenderWindow& window) : window(window) {
+
+    // Load the victory background asset from the assets folder
+    if (!backgroundTexture.loadFromFile("assets/victory-image.png")) {
+        std::cerr << "ERROR: Failed to load assets/victory-image.png" << std::endl;
+        // If the load fails, the sprite will remain white, but execution continues.
     }
 
-    mBackgroundSprite.setTexture(mBackgroundTexture);
+    backgroundSprite.setTexture(backgroundTexture);
 
-    // Ajusta a escala para preencher a janela (igual fizemos nos outros)
-    sf::Vector2u textureSize = mBackgroundTexture.getSize();
-    sf::Vector2u windowSize = mWindow.getSize();
+    // Scale the background sprite to cover the entire window area
+    sf::Vector2u textureSize = backgroundTexture.getSize();
+    sf::Vector2u windowSize = window.getSize();
     
     float scaleX = (float)windowSize.x / textureSize.x;
     float scaleY = (float)windowSize.y / textureSize.y;
     
-    mBackgroundSprite.setScale(scaleX, scaleY);
+    backgroundSprite.setScale(scaleX, scaleY);
 
-    // -----------------------------------------------------------
-    // 2. CONFIGURAÇÃO DO TEXTO E BOTÃO
-    // -----------------------------------------------------------
-    if (!mFont.loadFromFile("assets/font.ttf")) {
-        std::cerr << "Error loading font in WinMenu" << std::endl;
+    if (!font.loadFromFile("assets/font.ttf")) {
+        std::cerr << "ERROR: Failed to load font in WinMenu" << std::endl;
     }
    
-    // --- CÁLCULO PARA CENTRALIZAR O BOTÃO PERFEITAMENTE ---
     std::string btnText = "RETURN TO MENU";
     int btnSize = 60;
 
-    // Mede o tamanho que o texto do botão terá
-    sf::Text tempText(btnText, mFont, btnSize);
+    // Measure the local bounds of the button text for precise centering
+    sf::Text tempText(btnText, font, btnSize);
     sf::FloatRect btnBounds = tempText.getLocalBounds();
 
-    mMenuButton = std::make_unique<Button>(btnText, sf::Vector2f(windowSize.x / 2.0f, 300.f), mFont, btnSize);
+    // Instantiate the menu button using a smart pointer for automated resource management
+    menuButton = std::make_unique<Button>(btnText, sf::Vector2f(windowSize.x / 2.0f, 300.f), font, btnSize);
 }
 
 void WinMenu::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
-    if (mMenuButton->clicked(window, ev)) {
-        mNextState = MenuState::MainMenu;
+    // Check for interaction and trigger transition back to the Main Menu
+    if (menuButton->clicked(window, ev)) {
+        nextState = MenuState::MainMenu;
     }
 }
 
 void WinMenu::update(float dt, sf::RenderWindow& window) {
-    mMenuButton->update(window);
+    menuButton->update(window);
 }
 
 void WinMenu::draw(sf::RenderWindow& window) {
-    // 1. DESENHA O FUNDO PRIMEIRO (Removemos o clear com cor sólida)
-    window.draw(mBackgroundSprite);
-    
-    // 2. DESENHA O RESTO POR CIMA
-    window.draw(mText);
-    mMenuButton->draw(window);
+    window.draw(backgroundSprite);
+    window.draw(text);
+    menuButton->draw(window);
 }
 
 MenuState WinMenu::getNextState() const {
-    return mNextState;
+    return nextState;
 }

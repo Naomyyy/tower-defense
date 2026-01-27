@@ -1,65 +1,65 @@
 #include "Menus/Button.hpp"
 
 Button::Button(const std::string& label, sf::Vector2f pos, sf::Font& font, unsigned int size) {
-    // 1. Configurar o Texto
     text.setFont(font);
     text.setString(label);
     text.setCharacterSize(size);
-    text.setFillColor(normalColor); // Começa Branco
+    text.setFillColor(normalColor); 
 
-    // --- LÓGICA DE CENTRALIZAÇÃO DO TEXTO ---
-    // Pega o retângulo do texto para achar o centro
+    // Retrieve the local bounding box to calculate the exact center of the text
     sf::FloatRect textRect = text.getLocalBounds();
-    // Define a origem do texto no exato centro dele
+    
+    // Set the origin to the center of the text rectangle to allow precise positioning
     text.setOrigin(textRect.left + textRect.width / 2.0f,
                    textRect.top  + textRect.height / 2.0f);
-    // Posiciona o texto na coordenada passada
+    
+    // Set the final position of the text on the screen
     text.setPosition(pos);
-    // ----------------------------------------
 
-    // 2. Configurar a Caixa (Hitbox invisível)
-    // A caixa serve apenas para o mouse detectar o clique
-    sf::Vector2f padding(20.f, 10.f); // Espaço extra para facilitar o clique
+    // Add padding to make the clickable area slightly larger than the text for better UX
+    sf::Vector2f padding(20.f, 10.f);
     box.setSize(sf::Vector2f(textRect.width + padding.x * 2, textRect.height + padding.y * 2));
     
-    // Centraliza a caixa na mesma posição do texto
+    
     box.setOrigin(box.getSize() / 2.0f);
     box.setPosition(pos);
-
-    // DEIXA A CAIXA INVISÍVEL (Sem borda, sem fundo)
     box.setFillColor(sf::Color::Transparent); 
-    // Se quiser ver a caixa para debug, descomente a linha abaixo:
-    // box.setOutlineColor(sf::Color::Red); box.setOutlineThickness(1);
 }
 
 void Button::update(sf::RenderWindow& win) {
-    sf::Vector2f mp = (sf::Vector2f)sf::Mouse::getPosition(win);
-    isHovered = box.getGlobalBounds().contains(mp);
+    sf::Vector2f mousePos = (sf::Vector2f)sf::Mouse::getPosition(win);
+    
+    // Check if the mouse cursor is hovering over the button's global bounds
+    isHovered = box.getGlobalBounds().contains(mousePos);
 
     if (isHovered) {
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            text.setFillColor(pressedColor); // Cor ao clicar
+            text.setFillColor(pressedColor); 
         } else {
-            text.setFillColor(hoverColor);   // Cor ao passar o mouse (Verde)
+            text.setFillColor(hoverColor);   
         }
     } else {
-        text.setFillColor(normalColor);      // Cor normal (Branco)
+        text.setFillColor(normalColor); 
     }
 }
 
 bool Button::clicked(sf::RenderWindow& win, const sf::Event& ev) {
+    // Check for a Mouse Button Pressed event specifically for the Left click
     if (ev.type == sf::Event::MouseButtonPressed &&
         ev.mouseButton.button == sf::Mouse::Left) {
         
-        sf::Vector2f mp((float)ev.mouseButton.x, (float)ev.mouseButton.y);
-        return box.getGlobalBounds().contains(mp);
+        // Convert the event's pixel coordinates to a floating-point vector
+        sf::Vector2f mousePos((float)ev.mouseButton.x, (float)ev.mouseButton.y);
+        
+        // Return true if the click happened within the button's hitbox
+        return box.getGlobalBounds().contains(mousePos);
     }
     return false;
 }
 
 void Button::draw(sf::RenderWindow& win) {
-    win.draw(box);  // Desenha a caixa (invisível, mas necessária se tiver debug)
-    win.draw(text); // Desenha o texto por cima
+    win.draw(box);  
+    win.draw(text); 
 }
 
 sf::Vector2f Button::getPosition() const {

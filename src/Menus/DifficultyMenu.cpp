@@ -1,77 +1,73 @@
 #include "Menus/DifficultyMenu.hpp"
-#include <iostream> // Necessário para avisar se a imagem der erro
+#include <iostream>
 
 DifficultyMenu::DifficultyMenu(sf::RenderWindow& window) {
-    // --- 1. CONFIGURAÇÃO DA IMAGEM DE FUNDO ---
-    // Mude "assets/difficulty_bg.png" para o nome do arquivo que você quer usar
-    if (!mBackgroundTexture.loadFromFile("assets/menu-dif.jpg")) {
-        std::cerr << "ERRO: Nao foi possivel carregar o fundo de Dificuldade!" << std::endl;
+    
+    // Attempt to load the background image for the difficulty selection screen
+    if (!backgroundTexture.loadFromFile("assets/menu-dif.jpg")) {
+        std::cerr << "ERROR: Could not load Difficulty menu background!" << std::endl;
     }
 
-    mBackgroundSprite.setTexture(mBackgroundTexture);
+    backgroundSprite.setTexture(backgroundTexture);
 
-    // Cálculos para esticar a imagem e cobrir a tela inteira
-    sf::Vector2u textureSize = mBackgroundTexture.getSize();
+    // Calculate scaling factors to ensure the background fits the current window size
+    sf::Vector2u textureSize = backgroundTexture.getSize();
     sf::Vector2u windowSize = window.getSize();
 
     float scaleX = (float)windowSize.x / textureSize.x;
     float scaleY = (float)windowSize.y / textureSize.y;
 
-    mBackgroundSprite.setScale(scaleX, scaleY);
-    // ------------------------------------------
-
-    // --- SEU CÓDIGO ORIGINAL ---
-    mFont.loadFromFile("assets/font.ttf");
-
-    mTitle.setFont(mFont);
-    mTitle.setString("SELECT DIFFICULTY");
-    mTitle.setCharacterSize(50);
-    mTitle.setFillColor(sf::Color::White);
+    backgroundSprite.setScale(scaleX, scaleY);
     
-    // Dica: Se quiser centralizar o título perfeitamente igual fizemos no outro menu:
-    sf::FloatRect textRect = mTitle.getLocalBounds();
-    mTitle.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    mTitle.setPosition(window.getSize().x / 2.f, 100.f);
+    // Load the primary font for UI elements
+    font.loadFromFile("assets/font.ttf");
+
+    // Configure the title text properties and alignment
+    title.setFont(font);
+    title.setString("SELECT DIFFICULTY");
+    title.setCharacterSize(50);
+    title.setFillColor(sf::Color::White);
     
-    // Se preferir manter o seu posicionamento manual antigo, descomente a linha abaixo e apague as 3 acima:
-    // mTitle.setPosition(window.getSize().x / 2.f - 200.f, 100.f);
+    // Center the title's origin based on its local bounds for perfect horizontal positioning
+    sf::FloatRect textRect = title.getLocalBounds();
+    title.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+    title.setPosition(window.getSize().x / 2.f, 100.f);
+    
+    // Define button layout constants
+    float spacing = 150.f; 
+    float startX = window.getSize().x / 2.f - spacing;
+    float posY = 250.f; 
 
-
-    // Espaçamento entre os botões
-    float spacing = 150.f; // distância entre os botões
-    float startX = window.getSize().x / 2.f - spacing; // centraliza o conjunto
-    float posY = 250.f; // mesma altura para todos
-
-    mEasyBtn   = std::make_unique<Button>("EASY",   sf::Vector2f(startX, posY), mFont, 40);
-    mNormalBtn = std::make_unique<Button>("NORMAL", sf::Vector2f(startX + spacing, posY), mFont, 40);
-    mHardBtn   = std::make_unique<Button>("HARD",   sf::Vector2f(startX + 2*spacing, posY), mFont, 40);
-
+    // Initialize difficulty buttons using smart pointers
+    easyBtn   = std::make_unique<Button>("EASY",   sf::Vector2f(startX, posY), font, 40);
+    normalBtn = std::make_unique<Button>("NORMAL", sf::Vector2f(startX + spacing, posY), font, 40);
+    hardBtn   = std::make_unique<Button>("HARD",   sf::Vector2f(startX + 2 * spacing, posY), font, 40);
 }
 
 void DifficultyMenu::handleEvent(const sf::Event& ev, sf::RenderWindow& window) {
-    if (mEasyBtn->clicked(window, ev)) { mSelection = 0; mNextState = MenuState::Gameplay; }
-    if (mNormalBtn->clicked(window, ev)) { mSelection = 1; mNextState = MenuState::Gameplay; }
-    if (mHardBtn->clicked(window, ev)) { mSelection = 2; mNextState = MenuState::Gameplay; }
+    // Check for button interactions and update the state to launch gameplay
+    if (easyBtn->clicked(window, ev))   { selection = 0; nextState = MenuState::Gameplay; }
+    if (normalBtn->clicked(window, ev)) { selection = 1; nextState = MenuState::Gameplay; }
+    if (hardBtn->clicked(window, ev))   { selection = 2; nextState = MenuState::Gameplay; }
 }
 
 void DifficultyMenu::update(float dt, sf::RenderWindow& window) {
-    mEasyBtn->update(window);
-    mNormalBtn->update(window);
-    mHardBtn->update(window);
+    // Update button hover/active states
+    easyBtn->update(window);
+    normalBtn->update(window);
+    hardBtn->update(window);
 }
 
 void DifficultyMenu::draw(sf::RenderWindow& window) {
-    // 1. DESENHA O FUNDO PRIMEIRO
-    // Substitui o window.clear
-    window.draw(mBackgroundSprite);
-
-    // 2. DESENHA O RESTO
-    window.draw(mTitle);
-    mEasyBtn->draw(window);
-    mNormalBtn->draw(window);
-    mHardBtn->draw(window);
+    // Render all menu components to the current window
+    window.draw(backgroundSprite);
+    window.draw(title);
+    
+    easyBtn->draw(window);
+    normalBtn->draw(window);
+    hardBtn->draw(window);
 }
 
-int DifficultyMenu::getSelectedDifficulty() const { return mSelection; };
+int DifficultyMenu::getSelectedDifficulty() const { return selection; }
 
-MenuState DifficultyMenu::getNextState() const { return mNextState; }
+MenuState DifficultyMenu::getNextState() const { return nextState; }

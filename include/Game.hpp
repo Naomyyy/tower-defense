@@ -43,25 +43,25 @@ private:
     
     sf::RenderWindow window;
     Map map;
-    // Entity Containers
+
     std::vector<std::unique_ptr<Enemy>> enemies;
     std::vector<std::unique_ptr<Tower>> towers;
     std::vector<Projectile> projectiles;
-    // Spawning System
+
     float spawnTimer = 0.f;
     float spawnInterval = 2.f; 
     int spawnedCount = 0;
     int maxSpawn = 20;
     float enemySpeedMultiplier;
-    // UI and Menus
-    MenuState gameState = MenuState::MainMenu; // Começa no menu principal
+
+    MenuState gameState = MenuState::MainMenu; // Starts in the main menu
     std::unique_ptr<MenuScreen> currentMenu;
     sf::Font font; 
     sf::Font numberFont;
     sf::Text moneyUI;
     std::vector<std::unique_ptr<Button>> shopButtons;
     sf::Text livesUI;
-    // Game 
+
     Difficulty difficulty;
     TowerType selectedTower;
     std::vector<sf::Vector2f> path;

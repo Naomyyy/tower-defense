@@ -6,7 +6,7 @@
 
 class PauseMenu : public MenuScreen {
 public:
-    explicit PauseMenu(sf::RenderWindow& window); // Construtor
+    explicit PauseMenu(sf::RenderWindow& window); 
 
     void handleEvent(const sf::Event& ev, sf::RenderWindow& window) override;
     void update(float dt, sf::RenderWindow& window) override;
@@ -14,16 +14,15 @@ public:
     MenuState getNextState() const override;
 
 private:
-    sf::RenderWindow& mWindow;
-    sf::Font mFont;
+    sf::RenderWindow& window;
+    sf::Font font;
     
-    std::unique_ptr<Button> mResumeButton;
-    std::unique_ptr<Button> mMainMenuButton;
+    std::unique_ptr<Button> resumeButton;
+    std::unique_ptr<Button> mainMenuButton;
     
-    MenuState mNextState = MenuState::None;
+    MenuState nextState = MenuState::None;
 
-    // --- ADICIONE ISSO PARA A TRANSPARÊNCIA ---
-    sf::Texture mBackgroundTexture; // Guarda a imagem do jogo congelado
-    sf::Sprite mBackgroundSprite;   // Mostra a imagem
-    sf::RectangleShape mOverlay;    // O filtro escuro semitransparente
+    sf::Texture backgroundTexture; 
+    sf::Sprite backgroundSprite;   
+    sf::RectangleShape overlay;    
 };
