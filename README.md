@@ -34,8 +34,11 @@ Depuis le répertoire racine du projet :
 
 
 mkdir build
+
 cd build
+
 cmake ..
+
 make
 
 
