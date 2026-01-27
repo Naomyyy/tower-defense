@@ -1,43 +1,42 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
 #include <optional>
 #include <string>
-#include "Enemies/Enemy.hpp"      // Certifique-se que existe
-#include "Projectile.hpp" // Certifique-se que existe
 
-enum class TowerType {
-    Archer,
-    Cannon,
-    Mage
-};
+#include "Enemies/Enemy.hpp"      
+#include "Projectile.hpp" 
+
+enum class TowerType {Archer, Cannon, Mage};
 
 class Tower {
 public:
-    // Construtor
+    // Initializes the tower with its position and sets the base texture.
     Tower(sf::Vector2f position, const std::string& textureName);
     virtual ~Tower() = default;
-
-    // Lógica principal: Retorna um projetil se atirar
+    // Returns a projectile only if the tower fires this frame
     virtual std::optional<Projectile> update(float dt, const std::vector<std::unique_ptr<Enemy>>& enemies);
-    
+    // Show the tower sprite in the window.
     void draw(sf::RenderWindow& window);
 
 protected:
+    // Updates the size and position of the range visualization circle.
     void updateRangeVisuals();
-    // Função auxiliar para encontrar o inimigo mais próximo
-    const Enemy* findTarget(const std::vector<std::unique_ptr<Enemy>>& enemies);
+    // Searches for the enemy closest to the end of the path
+    const Enemy* findTarget(const std::vector<std::unique_ptr<Enemy>>& enemies); 
+
 
 protected:
-    sf::Sprite mSprite;
-    sf::CircleShape mRangeIndicator; 
+    sf::Sprite sprite;
+    sf::CircleShape rangeIndicator; 
+    std::string projectileTexture; 
+
+    float range;           
+    float fireCooldown;    
+    float timer;           
     
-    float mRange;           
-    float mFireCooldown;    
-    float mTimer;           
-    
-    int mDamage;                    
-    float mProjectileSpeed;         
-    std::string mProjectileTexture; 
+    int damage;                    
+    float projectileSpeed;         
 };

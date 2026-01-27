@@ -1,9 +1,8 @@
 #include "Towers/Tower.hpp"
 #include "AssetManager.hpp"
 #include <cmath>
-#include <iostream>
-#include <optional>
 
+// Turn a vector into a unit vector (length of 1)
 static sf::Vector2f normalize(const sf::Vector2f& v) {
     float len = std::sqrt(v.x * v.x + v.y * v.y);
     if (len == 0.f) return {0.f, 0.f};
@@ -11,84 +10,64 @@ static sf::Vector2f normalize(const sf::Vector2f& v) {
 }
 
 Tower::Tower(sf::Vector2f position, const std::string& textureName) 
-    : mTimer(0.f),
-      mRange(150.f),
-      mFireCooldown(1.0f),
-      mDamage(10),
-      mProjectileSpeed(300.f)
+    : timer(0.f), range(150.f), fireCooldown(1.0f), damage(10), projectileSpeed(300.f) 
 {
-    mSprite.setTexture(AssetManager::getInstance().getTexture(textureName));
-    
-    sf::FloatRect bounds = mSprite.getLocalBounds();
-    mSprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
-    mSprite.setPosition(position);
-
+    sprite.setTexture(AssetManager::getInstance().getTexture(textureName));
+    // Set origin to center for correct rotation and placement
+    sf::FloatRect bounds = sprite.getLocalBounds();
+    sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    sprite.setPosition(position);
+    // Draw the tower's attack range
     updateRangeVisuals();
 }
 
 void Tower::updateRangeVisuals() {
-    mRangeIndicator.setRadius(mRange);
-    mRangeIndicator.setOrigin(mRange, mRange);
-    mRangeIndicator.setPosition(mSprite.getPosition());
-    mRangeIndicator.setFillColor(sf::Color::Transparent);
-    mRangeIndicator.setOutlineColor(sf::Color(255, 255, 255, 50));
-    mRangeIndicator.setOutlineThickness(1.f);
+    rangeIndicator.setRadius(range);
+    rangeIndicator.setOrigin(range, range);
+    rangeIndicator.setPosition(sprite.getPosition());
+    rangeIndicator.setFillColor(sf::Color::Transparent);
+    rangeIndicator.setOutlineColor(sf::Color(255, 255, 255, 50));
+    rangeIndicator.setOutlineThickness(1.f);
 }
 
 void Tower::draw(sf::RenderWindow& window) {
-    // window.draw(mRangeIndicator); // debug
-    window.draw(mSprite);
+    window.draw(sprite);
 }
 
-// 🔹 PRIORIDADE: inimigo mais avançado no caminho
 const Enemy* Tower::findTarget(const std::vector<std::unique_ptr<Enemy>>& enemies) {
+
     const Enemy* target = nullptr;
-    float maxProgress = -1.f; // inimigo mais avançado
+    float maxProgress = -1.f;
 
     for (const auto& enemy : enemies) {
         if (!enemy->isAlive()) continue;
-
-        // Verifica se está dentro do alcance
-        sf::Vector2f diff = enemy->getPosition() - mSprite.getPosition();
-        float distSq = diff.x * diff.x + diff.y * diff.y;
-        if (distSq > mRange * mRange) continue;
-
-        // Progressão no caminho (0 = início, 1 = fim)
-        float progress = enemy->getProgress(); // 👈 você precisa criar esse método no Enemy
-
+        // Calculate the difference in X and Y coordinates.
+        sf::Vector2f diff = enemy->getPosition() - sprite.getPosition();
+        // Pythagorean Theorem: a^2 + b^2 = c^2 to see if the enemy it's in the tower's range
+        if ((diff.x * diff.x + diff.y * diff.y) > range * range) continue; 
+        // If multiple enemies are in range, we pick the one with most progress.
+        float progress = enemy->getProgress();
         if (progress > maxProgress) {
             maxProgress = progress;
             target = enemy.get();
         }
     }
-
-    return target;
+    return target; // Returns an enemy or nullptr if no enemy is found
 }
 
 std::optional<Projectile> Tower::update(float dt, const std::vector<std::unique_ptr<Enemy>>& enemies) {
-    mTimer -= dt;
-
-    if (mTimer <= 0.f) {
+    // Subtract the time passed since the last frame
+    timer -= dt;
+    // The tower can only shoot if the "cooldown" timer has reached zero
+    if (timer <= 0.f) {
         const Enemy* target = findTarget(enemies);
-        
         if (target) {
-            mTimer = mFireCooldown;
+            // Reset the timer to start a new cooldown period
+            timer = fireCooldown;
+            // Calculate direction vector from tower to enemy 
+            sf::Vector2f direction = normalize(target->getPosition() - sprite.getPosition());
 
-            sf::Vector2f towerPos = mSprite.getPosition();
-            sf::Vector2f enemyPos = target->getSprite().getPosition();
-            sf::FloatRect eBounds = target->getSprite().getGlobalBounds();
-            enemyPos.x += eBounds.width / 2.f;
-            enemyPos.y += eBounds.height / 2.f;
-
-            sf::Vector2f direction = normalize(enemyPos - towerPos);
-
-            return Projectile(
-                towerPos,           // posição inicial
-                direction,          // direção NORMALIZADA
-                mProjectileSpeed,   // velocidade
-                mDamage,            // dano
-                mProjectileTexture  // textura
-            );
+            return Projectile(sprite.getPosition(), direction, projectileSpeed, damage, projectileTexture);
         }
     }
     return std::nullopt;

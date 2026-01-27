@@ -1,16 +1,15 @@
 #include "Towers/ArcherTower.hpp"
 
 ArcherTower::ArcherTower(sf::Vector2f position) 
-    : Tower(position, "archer_tower") // Passa a textura para a base
+    : Tower(position, "archer_tower") 
 {
-    // Configurações Específicas da Arqueira
-    mRange = 200.f;
-    mDamage = 10;
-    mFireCooldown = 0.5f; // 1 tiro por segundo
-    mProjectileSpeed = 500.f;
-    mProjectileTexture = "arrow";
+    // Tower with high attack speed but low damage
+    range = 200.f;
+    damage = 10;
+    fireCooldown = 0.5f; 
+    projectileSpeed = 500.f;
+    projectileTexture = "arrow";
     
-    updateRangeVisuals(); // Atualiza o tamanho do círculo de alcance
-
+    updateRangeVisuals(); 
     
 }

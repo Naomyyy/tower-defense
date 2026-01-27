@@ -24,17 +24,12 @@
 #include "Menus/WinMenu.hpp"  
 #include "Menus/DifficultyMenu.hpp"  
 
-enum class Difficulty {
-    Easy,
-    Normal,
-    Hard
-};
+enum class Difficulty {Easy,Normal,Hard};
 
 
 class Game {
 public:
     Game();
-
     void run();
 
 private:
@@ -45,34 +40,32 @@ private:
     void setupDifficulty(int choice);
 
 private:
-    TowerType mSelectedTower;
-    sf::RenderWindow mWindow;
-    std::vector<sf::Vector2f> mPath;
-
-    std::vector<std::unique_ptr<Enemy>> mEnemies;
-    std::vector<std::unique_ptr<Tower>> mTowers;
-    std::vector<Projectile> mProjectiles;
-    Map mMap;
-    bool mIsTowerSelected;
-
-    float mSpawnTimer = 0.f;
-    float mSpawnInterval = 2.f; // intervalo entre spawns (segundos)
-    int mSpawnedCount = 0;
-    int mMaxSpawn = 20;
-    float mEnemySpeedMultiplier;
-
-    MenuState mGameState = MenuState::MainMenu; // Começa no menu principal
-    std::unique_ptr<MenuScreen> mCurrentMenu;
-
-    int mMoney;
-    sf::Font mFont; 
-    sf::Font mNumberFont;
-    sf::Text mMoneyUI;
-    std::vector<std::unique_ptr<Button>> mShopButtons;
     
-    int mLives;
-    sf::Text mLivesUI;
-
-    Difficulty mDifficulty;
-
+    sf::RenderWindow window;
+    Map map;
+    // Entity Containers
+    std::vector<std::unique_ptr<Enemy>> enemies;
+    std::vector<std::unique_ptr<Tower>> towers;
+    std::vector<Projectile> projectiles;
+    // Spawning System
+    float spawnTimer = 0.f;
+    float spawnInterval = 2.f; 
+    int spawnedCount = 0;
+    int maxSpawn = 20;
+    float enemySpeedMultiplier;
+    // UI and Menus
+    MenuState gameState = MenuState::MainMenu; // Começa no menu principal
+    std::unique_ptr<MenuScreen> currentMenu;
+    sf::Font font; 
+    sf::Font numberFont;
+    sf::Text moneyUI;
+    std::vector<std::unique_ptr<Button>> shopButtons;
+    sf::Text livesUI;
+    // Game 
+    Difficulty difficulty;
+    TowerType selectedTower;
+    std::vector<sf::Vector2f> path;
+    bool isTowerSelected;
+    int lives;
+    int money;
 };

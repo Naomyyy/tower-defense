@@ -3,12 +3,12 @@
 MageTower::MageTower(sf::Vector2f position) 
     : Tower(position, "mage_tower")
 {
-    // Configurações Específicas do Mago
-    mRange = 300.f;        // Alcance longo
-    mDamage = 30;          // Dano baixo
-    mFireCooldown = 1.0f;  // Muito rápido (metralhadora mágica)
-    mProjectileSpeed = 400.f;
-    mProjectileTexture = "magic_bolt";
+    // Tower with long range , fast but low damage
+    range = 300.f;       
+    damage = 30;          
+    fireCooldown = 1.0f;  
+    projectileSpeed = 400.f;
+    projectileTexture = "magic_bolt";
     
     updateRangeVisuals();
 }

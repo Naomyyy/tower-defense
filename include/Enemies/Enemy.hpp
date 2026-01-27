@@ -1,46 +1,44 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
-#include <cmath>
 
 class Enemy {
 public:
     Enemy(sf::Vector2f startPos, const std::string& textureName,
           int health, int damage, float speed, int reward);
-
+    // Updates position along the path and health bar status
     void update(float dt, const std::vector<sf::Vector2f>& path);
+    // Renders the enemy and its health interface
     void draw(sf::RenderWindow& window);
-
+    // Getters
     sf::Vector2f getPosition() const;
     const sf::Sprite& getSprite() const;
-    bool isAlive() const;
-    void destroy();
-
-    // Métodos para manipular vida e dano
-    void takeDamage(int amount);
     int getDamage() const;
     int getReward() const;
-    float getProgress() const { return mProgress; } 
-
+    float getProgress() const;
+    bool isAlive() const;
+    // Logic
+    void destroy();
+    void takeDamage(int amount);
 
 private:
-    sf::Sprite mSprite;
-    sf::Vector2f mPosition;
+    sf::Sprite sprite;
+    sf::Vector2f position;
 
+    int maxHealth;
     int health;
     int damage;
     float speed;
     int reward;
 
-    float mProgress = 0.f;
+    float progress = 0.f; // 0.0 to 1.0 (start to end of path)
 
-    // variáveis para movimento e estado
     size_t currentPathIndex = 0;
     bool alive = true;
 
-    // variaveis para representar a vida do inimigo
-    sf::RectangleShape mHealthBarBack;
-    sf::RectangleShape mHealthBarFront;
-    int maxHealth;
+    // Health bar visuals
+    sf::RectangleShape healthBarBack;
+    sf::RectangleShape healthBarFront;
 };

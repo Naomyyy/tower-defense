@@ -2,12 +2,12 @@
 
 Ghost::Ghost(sf::Vector2f startPos)
     : Enemy(
-        startPos,
-        "ghost_texture",
-        80,     // pouca vida
-        10,     // dano baixo
-        110.f,  // muito rápido
-        25      // recompensa média
+        startPos, // Position
+        "ghost_texture", // Texture Name
+        80,     // Health
+        10,     // Damage for player
+        110.f,  // Speed
+        25      // Gold Reward 
       )
 {
 }

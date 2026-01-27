@@ -1,13 +1,13 @@
 #include "Enemies/Minotaur.hpp"
 
-Minotaur::Minotaur(sf::Vector2f startPos)
+Minotaur::Minotaur(sf::Vector2f startPos) // High health and reward  
     : Enemy(
-        startPos,
-        "minotaur_texture",
-        350,    // vida média-alta
-        30,     // dano alto
-        55.f,   // velocidade média
-        50      // recompensa alta
+        startPos, // Position
+        "minotaur_texture", // Texture name
+        350,    // Health 
+        30,     // Damage to player
+        55.f,   // Speed
+        50      // Gold Reward
       )
 {
 }

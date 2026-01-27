@@ -4,10 +4,11 @@
 
 class Projectile {
 public:
-    // Construtor atualizado: Agora aceita velocidade, dano e nome da textura
-    Projectile(sf::Vector2f position, sf::Vector2f direction, float speed, int damage, const std::string& textureName);
     
+    Projectile(sf::Vector2f position, sf::Vector2f direction, float speed, int damage, const std::string& textureName);
+    // Updates position based on velocity and delta time
     void update(float dt);
+    // Draws the projectile sprite to the window
     void draw(sf::RenderWindow& window);
     
     // Getters e Setters
@@ -15,12 +16,11 @@ public:
     sf::Vector2f getPosition() const;
     bool isAlive() const;
     void destroy(); 
-
     int getDamage() const;
 
 private:
-    sf::Sprite mSprite;     // Mudamos de CircleShape para Sprite (para usar imagens)
-    sf::Vector2f mVelocity;
-    bool mAlive = true;
-    int mDamage;            // Variável para guardar o dano
+    sf::Sprite sprite;     
+    sf::Vector2f velocity;
+    bool alive = true;
+    int damage;            
 };
