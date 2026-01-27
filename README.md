@@ -32,7 +32,7 @@ Avant de compiler le projet, assurez-vous d’avoir installé :
 
 Depuis le répertoire racine du projet :
 
-```bash
+
 mkdir build
 cd build
 cmake ..
