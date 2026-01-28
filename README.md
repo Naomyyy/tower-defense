@@ -10,7 +10,7 @@ Bien que le projet soit compatible multiplateforme, l’utilisation d’un envir
 ### Instructions pour Linux (Recommandé)
 L’installation de la SFML se fait via le gestionnaire de paquets: 
 ```bash
-`sudo apt install libsfml-dev`
+sudo apt install libsfml-dev
 ```
  Ensuite, exécutez les commandes suivantes dans votre terminal :
 ```bash
