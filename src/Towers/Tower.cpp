@@ -13,9 +13,10 @@ Tower::Tower(sf::Vector2f position, const std::string& textureName)
     : timer(0.f), range(150.f), fireCooldown(1.0f), damage(10), projectileSpeed(300.f) 
 {
     sprite.setTexture(AssetManager::getInstance().getTexture(textureName));
+    sprite.setScale(0.8f, 0.8f);
     // Set origin to center for correct rotation and placement
     sf::FloatRect bounds = sprite.getLocalBounds();
-    sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    sprite.setOrigin(bounds.width / 2.f, bounds.height);
     sprite.setPosition(position);
     // Draw the tower's attack range
     updateRangeVisuals();
@@ -65,7 +66,14 @@ std::optional<Projectile> Tower::update(float dt, const std::vector<std::unique_
             // Reset the timer to start a new cooldown period
             timer = fireCooldown;
             // Calculate direction vector from tower to enemy 
-            sf::Vector2f direction = normalize(target->getPosition() - sprite.getPosition());
+            sf::Vector2f firePosition = sprite.getPosition();
+
+            // To shoot from the middle: 
+            // Since the original tile is 40px and scale is 0.8, 
+            // -20.f usually hits the visual center.
+            firePosition.y -= 20.f;
+            sf::Vector2f direction = normalize(target->getPosition() - firePosition);
+            // sf::Vector2f direction = normalize(target->getPosition() - sprite.getPosition() - 20.f);
 
             return Projectile(sprite.getPosition(), direction, projectileSpeed, damage, projectileTexture);
         }
