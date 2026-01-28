@@ -72,3 +72,5 @@ std::optional<Projectile> Tower::update(float dt, const std::vector<std::unique_
     }
     return std::nullopt;
 }
+
+const sf::Sprite& Tower::getSprite() const { return sprite; }

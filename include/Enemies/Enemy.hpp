@@ -15,7 +15,7 @@ public:
     // Getters
     sf::Vector2f getPosition() const;
     const sf::Sprite& getSprite() const;
-    int getDamage() const;
+    virtual int getDamage() const;
     int getReward() const;
     float getProgress() const;
     bool isAlive() const;

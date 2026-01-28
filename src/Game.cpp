@@ -20,7 +20,6 @@
 #include "Menus/GameOverMenu.hpp"
 #include "Menus/WinMenu.hpp"
 
-// Definitions for grid constants if not in a header
 #ifndef TILE_SIZE
 #define TILE_SIZE 40 
 #define GRID_WIDTH 20
@@ -43,17 +42,14 @@ Game::Game()
     window.setFramerateLimit(60);
 
     AssetManager& assets = AssetManager::getInstance();
-    // Enemies Textures
     assets.loadTexture("base_enemy",   "assets/golem.png");
     assets.loadTexture("minotaur_texture", "assets/minotaur.png");
     assets.loadTexture("ghost_texture",    "assets/ghost.png");
 
-    // Towers Textures
     assets.loadTexture("archer_tower", "assets/torre1.png");
     assets.loadTexture("cannon_tower", "assets/torre2.png");
     assets.loadTexture("mage_tower",   "assets/torre3.png");
 
-    // Projectiles Textures
     assets.loadTexture("arrow",        "assets/stone.png");
     assets.loadTexture("cannonball",   "assets/lightning.png");
     assets.loadTexture("magic_bolt",   "assets/barrel.png");
@@ -61,7 +57,6 @@ Game::Game()
     font.loadFromFile("assets/font.ttf");
     numberFont.loadFromFile("assets/numberFont.ttf");
     
-    // Initialize UI elements ( gold and live )
     moneyUI.setFont(numberFont);
     moneyUI.setCharacterSize(20);
     moneyUI.setFillColor(sf::Color::Yellow);
@@ -74,14 +69,18 @@ Game::Game()
     livesUI.setPosition(550.f, 45.f);
     livesUI.setString("LIVES: " + std::to_string(lives));
 
-    // Setup Shop Buttons
     shopButtons.push_back(std::make_unique<Button>("50",  sf::Vector2f(550.f, 550.f), numberFont, 15));
     shopButtons.push_back(std::make_unique<Button>("100", sf::Vector2f(620.f, 550.f), numberFont, 15));
     shopButtons.push_back(std::make_unique<Button>("150", sf::Vector2f(690.f, 550.f), numberFont, 15));
 
     currentMenu = std::make_unique<MainMenu>(window);
+
+    demolishButton = std::make_unique<Button>("X", sf::Vector2f(760.f, 550.f), numberFont, 15);
+
+    isDemolishing = false; 
 }
 
+// Main game loop, handling events, updates, and rendering
 void Game::run() {
     sf::Clock clock;
     while (window.isOpen()) {
@@ -124,10 +123,21 @@ void Game::run() {
     }
 }
 
+// Handles user inputs during gameplay
 void Game::processEvents(const sf::Event& ev) {
     if (ev.type == sf::Event::KeyPressed && ev.key.code == sf::Keyboard::Escape) {
+        if (isDemolishing) {
+            isDemolishing = false;
+            return;
+        }
         gameState = MenuState::Pause;
         currentMenu = std::make_unique<PauseMenu>(window);
+        return;
+    }
+
+    if (demolishButton->clicked(window, ev)) {
+        isDemolishing = !isDemolishing;
+        isTowerSelected = false; 
         return;
     }
 
@@ -137,19 +147,28 @@ void Game::processEvents(const sf::Event& ev) {
             if (money >= cost) {
                 selectedTower = (i == 0) ? TowerType::Archer : (i == 1) ? TowerType::Cannon : TowerType::Mage;
                 isTowerSelected = true;
+                isDemolishing = false; 
             }
             return; 
         }
     }
-    // Handle Tower Placement
+
     if(ev.type == sf::Event::MouseButtonReleased && ev.mouseButton.button == sf::Mouse::Left){
 
         sf::Vector2f pos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         
         if (pos.x > 580 && pos.y > 450) return;
 
-        if (isTowerSelected) {
-
+        if (isDemolishing) {
+            for (size_t i = 0; i < towers.size(); ++i) {
+                if (towers[i]->getSprite().getGlobalBounds().contains(pos)) {
+                    towers.erase(towers.begin() + i);
+                    isDemolishing = false; 
+                    return;
+                }
+            }
+        }
+        else if (isTowerSelected) {
             int tileX = (int)pos.x / TILE_SIZE;
             int tileY = (int)pos.y / TILE_SIZE;
 
@@ -170,17 +189,17 @@ void Game::processEvents(const sf::Event& ev) {
             }
         }
     }
-    // Cancel selection
     else if (ev.type == sf::Event::MouseButtonReleased && ev.mouseButton.button == sf::Mouse::Right) {
         isTowerSelected = false;
+        isDemolishing = false;
     }
 }
 
+// Updates game elements each frame
 void Game::update(float dt) {
     spawnTimer -= dt;
     const std::vector<sf::Vector2f>& path = map.getPath();
 
-    // Spawn Enemies based on difficulty and timer
     if (spawnTimer <= 0.f && spawnedCount < maxSpawn && !path.empty()) {
         if (difficulty == Difficulty::Easy) {
             enemies.push_back(std::make_unique<Golem>(path.front()));
@@ -198,14 +217,14 @@ void Game::update(float dt) {
         spawnTimer = spawnInterval;
     }
 
-    // Update Enemies and handle path completion
     for (auto& enemy : enemies) {
         enemy->update(dt, path);
 
         sf::Vector2f diff = enemy->getPosition() - path.back();
 
         if (enemy->isAlive() && (diff.x * diff.x + diff.y * diff.y) < 100.f) {
-            lives--;
+
+            lives -= enemy->getDamage();
             enemy->destroy(); 
     
             if (lives <= 0) {
@@ -216,7 +235,6 @@ void Game::update(float dt) {
         }
     }
 
-    // Update Towers and generate projectiles
     for (auto& tower : towers) {
         if (auto proj = tower->update(dt, enemies)) {
             projectiles.push_back(*proj);
@@ -225,22 +243,20 @@ void Game::update(float dt) {
 
     for (auto& proj : projectiles) proj.update(dt);
     for (auto& btn : shopButtons) btn->update(window);
+    demolishButton->update(window);
 
     handleCollisions();
 
-    // Check Win Condition
     if (spawnedCount >= maxSpawn && enemies.empty()) {
         gameState = MenuState::Win;
         currentMenu = std::make_unique<WinMenu>(window);
         return;
     }
-    // Update UI Strings
     moneyUI.setString("GOLD: " + std::to_string(money));
     livesUI.setString("LIFE " + std::to_string(lives));
 }
-
+// Manages collisions between projectiles and enemies
 void Game::handleCollisions() {
-    // Iterates through active projectiles and enemies
     for (auto& p : projectiles) {
         if (!p.isAlive()) continue;
         for (auto& e : enemies) {
@@ -260,6 +276,7 @@ void Game::handleCollisions() {
         [](const std::unique_ptr<Enemy>& e){return !e->isAlive();}), enemies.end());
 }
 
+// Renders the game elements and the current menu
 void Game::render() {
     window.clear(sf::Color::Black);
 
@@ -272,7 +289,6 @@ void Game::render() {
         for (auto& t : towers) t->draw(window);
         for (auto& p : projectiles) p.draw(window);
 
-        // Renders UI Shop Icons 
         AssetManager& assets = AssetManager::getInstance();
         std::vector<std::string> textures = {"archer_tower", "cannon_tower", "mage_tower"};
         for (size_t i = 0; i < shopButtons.size(); ++i) {
@@ -283,10 +299,23 @@ void Game::render() {
             window.draw(icon);
         }
 
+        demolishButton->draw(window);
+
+        if (isDemolishing) { // Show demolish mode warning
+            sf::Text warningText;
+            warningText.setFont(font);
+            warningText.setString("DEMOLISH MODE");
+            warningText.setCharacterSize(16);
+            warningText.setFillColor(sf::Color::Red);
+            warningText.setPosition(740.f, 530.f);
+            window.draw(warningText);
+        }
+
         window.draw(moneyUI);
         window.draw(livesUI);
-
-        // Ghost Tower Preview for placement
+        
+        
+        // Draw tower ghost and range if a tower is selected
         if (isTowerSelected) {
             sf::Vector2i posI = sf::Mouse::getPosition(window);
             sf::Vector2f posF = window.mapPixelToCoords(posI);
@@ -317,16 +346,16 @@ void Game::render() {
     window.display();
 }
 
+// Configures game parameters based on selected difficulty
 void Game::setupDifficulty(int choice) {
     
     towers.clear();
     enemies.clear();
     projectiles.clear();
     spawnedCount = 0;
-    spawnTimer = 0.f;
+    spawnTimer = 5.f;
 
-    // Configuration based on selected difficulty
-    if (choice == 0) { // EASY
+    if (choice == 0) { 
         difficulty = Difficulty::Easy;
         map.load("assets/map_easy.txt");
         money = 150 ;
@@ -334,7 +363,7 @@ void Game::setupDifficulty(int choice) {
         maxSpawn = 20;
         enemySpeedMultiplier = 0.8f;
     } 
-    else if (choice == 2) { // HARD
+    else if (choice == 2) { 
         difficulty = Difficulty::Hard;
         map.load("assets/map_hard.txt");
         money = 200;
@@ -342,7 +371,7 @@ void Game::setupDifficulty(int choice) {
         maxSpawn = 80;
         enemySpeedMultiplier = 1.3f;
     } 
-    else { // NORMAL
+    else { 
         difficulty = Difficulty::Normal;
         map.load("assets/map_normal.txt");
         money = 150;

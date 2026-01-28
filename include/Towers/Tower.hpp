@@ -21,6 +21,8 @@ public:
     // Show the tower sprite in the window.
     void draw(sf::RenderWindow& window);
 
+    const sf::Sprite& getSprite() const;
+
 protected:
     // Updates the size and position of the range visualization circle.
     void updateRangeVisuals();

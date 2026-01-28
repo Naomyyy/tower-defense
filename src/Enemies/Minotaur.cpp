@@ -5,7 +5,7 @@ Minotaur::Minotaur(sf::Vector2f startPos) // High health and reward
         startPos, // Position
         "minotaur_texture", // Texture name
         350,    // Health 
-        30,     // Damage to player
+        10,     // Damage to player
         55.f,   // Speed
         50      // Gold Reward
       )

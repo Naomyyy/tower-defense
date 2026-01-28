@@ -68,4 +68,9 @@ private:
     bool isTowerSelected;
     int lives;
     int money;
+
+
+    std::unique_ptr<Button> demolishButton; // Button to toggle demolish mode
+    bool isDemolishing;
+    void demolishTowerAt(int index);
 };
