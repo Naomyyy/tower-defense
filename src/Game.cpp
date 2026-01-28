@@ -158,7 +158,7 @@ void Game::processEvents(const sf::Event& ev) {
                     int cost = (selectedTower == TowerType::Archer) ? 50 : 
                                (selectedTower == TowerType::Cannon) ? 100 : 150;
 
-                    sf::Vector2f towerPos = {(float)tileX * TILE_SIZE + 20.f, (float)tileY * TILE_SIZE + 40.f };
+                    sf::Vector2f towerPos = {(float)tileX * TILE_SIZE + 20.f, (float)tileY * TILE_SIZE + 20.f };
                     
                     if (selectedTower == TowerType::Archer) towers.push_back(std::make_unique<ArcherTower>(towerPos));
                     else if (selectedTower == TowerType::Cannon) towers.push_back(std::make_unique<CannonTower>(towerPos));
@@ -308,7 +308,6 @@ void Game::render() {
                                  (selectedTower == TowerType::Cannon) ? "cannon_tower" : "mage_tower";
             
             sf::Sprite ghost(assets.getTexture(texName));
-            ghost.setScale(0.8f, 0.8f);
             ghost.setOrigin(ghost.getLocalBounds().width / 2.f, ghost.getLocalBounds().height/ 2.f);
             ghost.setPosition(posF);
             ghost.setColor(sf::Color(255, 255, 255, 150));

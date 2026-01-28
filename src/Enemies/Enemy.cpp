@@ -35,44 +35,33 @@ void Enemy::update(float dt, const std::vector<sf::Vector2f>& path) {
         if (distance < speed * dt) {
             position = target;
             currentPathIndex++;
+            progress+=distance;
         } else {
             // Move towards the target point
             direction /= distance; // Normalize the direction
             position += direction * speed * dt;
+            progress+=speed * dt;
         }
         sprite.setPosition(position);
     } else {
         destroy();
     }
+    
     // Update health bar position and scale
     sf::Vector2f barPos = position + sf::Vector2f(-20.f, -35.f); 
+
     healthBarBack.setPosition(barPos);
     healthBarFront.setPosition(barPos);
     float healthPercentage = (float)health / (float)maxHealth;
     if (healthPercentage < 0.0f) healthPercentage = 0.0f;
+
     healthBarFront.setSize(sf::Vector2f(40.f * healthPercentage, 5.f));
-    if (healthPercentage > 0.5f) {
-        healthBarFront.setFillColor(sf::Color::Green);
-    } else if (healthPercentage > 0.15f) { 
-        healthBarFront.setFillColor(sf::Color::Yellow);
-    } else if (healthPercentage > 0.0f) { 
-        healthBarFront.setFillColor(sf::Color(255, 140, 0)); // Orange
-    } else {
-        healthBarFront.setFillColor(sf::Color::Red);
-    }
 
-    if (!path.empty()) {
-        sf::Vector2f start = path.front();
-        sf::Vector2f end = path.back();
-        sf::Vector2f pos = getPosition();
-
-        float totalDist = std::hypot(end.x - start.x, end.y - start.y);
-        float traveled = std::hypot(pos.x - start.x, pos.y - start.y);
-        // Update total progress (used by towers for targeting)
-        progress = totalDist > 0 ? traveled / totalDist : 0.f;
-        if (progress > 1.f) progress = 1.f;
-    }
-
+    if (healthPercentage > 0.5f)  healthBarFront.setFillColor(sf::Color::Green);
+    else if (healthPercentage > 0.15f) healthBarFront.setFillColor(sf::Color::Yellow);
+    else if (healthPercentage > 0.0f) healthBarFront.setFillColor(sf::Color(255, 140, 0)); // Orange
+    else healthBarFront.setFillColor(sf::Color::Red);
+    
 }
 
 void Enemy::draw(sf::RenderWindow& window) {
@@ -83,21 +72,6 @@ void Enemy::draw(sf::RenderWindow& window) {
     }
 }
 
-sf::Vector2f Enemy::getPosition() const {
-    return position;
-}
-
-const sf::Sprite& Enemy::getSprite() const{
-    return sprite;
-}
-
-bool Enemy::isAlive() const {
-    return alive;
-}
-
-void Enemy::destroy() {
-    alive = false;
-}
 
 void Enemy::takeDamage(int amount) {
     health -= amount;
@@ -106,16 +80,19 @@ void Enemy::takeDamage(int amount) {
     }
 }
 
-int Enemy::getDamage() const {
-    return damage;
-}
 
-int Enemy::getReward() const {
-    return reward;
-}
+sf::Vector2f Enemy::getPosition() const {return position;}
 
-float Enemy::getProgress() const {
-     return progress; 
-}
+const sf::Sprite& Enemy::getSprite() const{return sprite;}
+
+bool Enemy::isAlive() const {return alive;}
+
+void Enemy::destroy() {alive = false;}
+
+int Enemy::getDamage() const {return damage;}
+
+int Enemy::getReward() const {return reward;}
+
+float Enemy::getProgress() const {return progress;}
 
 

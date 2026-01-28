@@ -33,7 +33,7 @@ private:
     float speed;
     int reward;
 
-    float progress = 0.f; // 0.0 to 1.0 (start to end of path)
+    float progress = 0.f; 
 
     size_t currentPathIndex = 0;
     bool alive = true;
